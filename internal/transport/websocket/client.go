@@ -2,12 +2,12 @@ package client
 
 import (
 	"encoding/json"
-	"gophkeeper/internal/domain/pas_client"
+	"gophkeeper/internal/domain/auth"
 	"log"
 	"sync"
 	"time"
 
-	"github.com/gofiber/contrib/websocket"
+	"github.com/fasthttp/websocket"
 	guuid "github.com/google/uuid"
 	"go.uber.org/zap"
 )
@@ -30,7 +30,7 @@ type Client struct {
 
 	log *zap.Logger
 
-	userInfo *pas_client.Client
+	userInfo *auth.User
 
 	// manager is the manager used to manage the client
 	manager *Manager
@@ -48,7 +48,7 @@ var (
 )
 
 // NewClient is used to initialize a new Client with all required values initialized
-func NewClient(conn *websocket.Conn, log *zap.Logger, userInfo *pas_client.Client, manager *Manager, username string) *Client {
+func NewClient(conn *websocket.Conn, log *zap.Logger, userInfo *auth.User, manager *Manager) *Client {
 	return &Client{
 		connection: conn,
 		uuid:       genUUID(),
@@ -63,7 +63,7 @@ func NewClient(conn *websocket.Conn, log *zap.Logger, userInfo *pas_client.Clien
 // readMessages will start the client to read messages and handle them
 // appropriatly.
 // This is suppose to be ran as a goroutine
-func (c *Client) ReadMessages(token string) {
+func (c *Client) ReadMessages() {
 	defer func() {
 		// Graceful Close the Connection once this
 		// function is done
@@ -81,17 +81,6 @@ func (c *Client) ReadMessages(token string) {
 	// }
 	// Configure how to handle Pong responses
 	c.connection.SetPongHandler(c.pongHandler)
-	data, err := json.Marshal(token)
-	if err != nil {
-		c.log.Warn("error marshalling message", zap.Error(err))
-	}
-	if err := c.manager.routeEvent(Event{Type: EventSendNewToken, Payload: data}, c); err != nil {
-		log.Println("Error handeling Message: ", err)
-		c.egress <- Event{
-			Type:    EventNewMessage,
-			Payload: []byte(err.Error()),
-		}
-	}
 
 	// Loop Forever
 	for {

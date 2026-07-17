@@ -2,7 +2,7 @@ package client
 
 import (
 	"context"
-	"gophkeeper/internal/domain/pas_client"
+	"gophkeeper/internal/domain/auth"
 	"sync"
 
 	"go.uber.org/zap"
@@ -34,7 +34,6 @@ func NewManager(ctx context.Context, log *zap.Logger) *Manager {
 // setupEventHandlers configures and adds all handlers
 func (m *Manager) setupEventHandlers() {
 	m.handlers[EventSendMessage] = SendMessageHandler
-	m.handlers[EventSendNewToken] = SendNewTokenHandler
 }
 
 // routeEvent is used to make sure the correct event goes into the correct handler
@@ -47,26 +46,30 @@ func (m *Manager) routeEvent(event Event, c *Client) error {
 			}
 			return nil
 		} else {
-			return pas_client.ErrEventNotSupported
+			return auth.ErrEventNotSupported
 		}
 	} else {
-		return pas_client.ErrClientNotConnected
+		return auth.ErrClientNotConnected
 	}
 }
 
 // addClient will add clients to our clientList
 func (m *Manager) AddClient(client *Client) error { //type ClientList map[*models.Client]map[string]*Client
-	// Lock so we can manipulate
 	m.Lock()
 	defer m.Unlock()
+	if _, ok := m.clients[client.userInfo.ID][client]; ok {
+		return auth.ErrClientAlreadyConnected
+	}
 
 	// Check if Client exists
-	if _, ok := m.clients[client.userInfo.User_id]; !ok { //c.conn <= client.client.userInfo.Max_conns
-		m.clients[client.userInfo.User_id] = make(map[*Client]bool)
-		m.clients[client.userInfo.User_id][client] = true
-		return nil
+	if _, ok := m.clients[client.userInfo.ID]; !ok {
+		m.clients[client.userInfo.ID] = make(map[*Client]bool)
+		m.clients[client.userInfo.ID][client] = true
+	} else {
+		m.clients[client.userInfo.ID][client] = true
 	}
-	return pas_client.ErrClientNotConnected
+
+	return nil
 }
 
 // removeClient will remove the client and clean up
@@ -75,10 +78,14 @@ func (m *Manager) RemoveClient(client *Client) {
 	defer m.Unlock()
 
 	// Check if Client exists, then delete it
-	if _, ok := m.clients[client.userInfo.User_id]; ok {
+	if _, ok := m.clients[client.userInfo.ID][client]; ok {
 		// close connection
 		client.connection.Close()
 		// remove
-		delete(m.clients, client.userInfo.User_id)
+		delete(m.clients[client.userInfo.ID], client)
+	}
+
+	if len(m.clients[client.userInfo.ID]) == 0 {
+		delete(m.clients, client.userInfo.ID)
 	}
 }

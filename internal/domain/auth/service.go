@@ -8,4 +8,5 @@ import "context"
 type Service interface {
 	Register(ctx context.Context, username, password string) (string, error) // Register registers a new user and returns jwt token and error
 	Login(ctx context.Context, username, password string) (string, error)    // Login returns jwt token and error
+	GetUserByID(ctx context.Context, userID string) (*User, error)
 }

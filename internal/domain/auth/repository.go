@@ -8,4 +8,5 @@ import "context"
 type Repository interface {
 	CreateUser(ctx context.Context, login, password string) (string, error) // return user ID and error
 	GetUserByLogin(ctx context.Context, login string) (*User, error)        // return user and error
+	GetUserByID(ctx context.Context, userID string) (*User, error)
 }

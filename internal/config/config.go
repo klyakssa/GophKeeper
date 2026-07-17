@@ -35,10 +35,6 @@ type JWTConfig struct {
 	Expire time.Duration `mapstructure:"expire"` // jwt expire
 }
 
-type AccrualConfig struct {
-	Address string `mapstructure:"address"` // accrual service address
-}
-
 // Config struct
 type Config struct {
 	Debug   bool                  `mapstructure:"debug"`   // debug mode
@@ -47,7 +43,6 @@ type Config struct {
 	Web     *WebServerConfig      `mapstructure:"web"`     // web server config
 	PostDB  *DBConfig             `mapstructure:"postdb"`  // database config
 	JWT     *JWTConfig            `mapstructure:"jwt"`     // jwt config
-	Accrual *AccrualConfig        `mapstructure:"accrual"` // accrual service config
 }
 
 var C *Config = new(Config)
@@ -72,7 +67,7 @@ func initConfig() {
 }
 
 func loadEnv() {
-	viper.SetEnvPrefix("GOMART")
+	viper.SetEnvPrefix("GOPKEEPER")
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	viper.AutomaticEnv()
 
@@ -84,7 +79,6 @@ func loadEnv() {
 func loadFlags() {
 	runAddr := flag.String("a", "", "server run address")
 	dbURI := flag.String("d", "", "database connection string")
-	accrualAddr := flag.String("r", "", "accrual system address")
 
 	flag.Parse()
 
@@ -95,14 +89,10 @@ func loadFlags() {
 	if *dbURI != "" {
 		viper.Set("postdb.connection-string", *dbURI)
 	}
-
-	if *accrualAddr != "" {
-		viper.Set("accrual.address", *accrualAddr)
-	}
 }
 
 const (
-	AppName = "gophermart"
+	AppName = "gopkeeper"
 )
 
 func loadDefault() {
@@ -116,8 +106,6 @@ func loadDefault() {
 	viper.SetDefault("logging.max-age", 30)
 
 	viper.SetDefault("web.run-address", ":8100")
-
-	viper.SetDefault("accrual.address", "http://localhost:8080")
 
 	viper.SetDefault("postdb.connection-string", "postgres://test:11@localhost:5432/diplom?sslmode=disable") //postgres://postgres:11@localhost:5432/test_prac?sslmode=disable
 

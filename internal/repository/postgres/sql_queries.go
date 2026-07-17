@@ -2,6 +2,8 @@ package postgres
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 	"gophkeeper/internal/domain/auth"
 )
 
@@ -18,4 +20,19 @@ func (p *PostgresStorage) GetUserByLogin(ctx context.Context, login string) (*au
 	user := &auth.User{}
 	err := row.StructScan(user)
 	return user, err
+}
+
+func (p *PostgresStorage) GetUserByID(ctx context.Context, userid string) (*auth.User, error) {
+	query := `SELECT id, login, password FROM users WHERE id = $1`
+
+	var user auth.User
+	err := p.DB.GetContext(ctx, &user, query, userid)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, auth.ErrUserNotFound
+		}
+		return nil, err
+	}
+
+	return &user, nil
 }

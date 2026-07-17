@@ -43,10 +43,11 @@ func Run(cfg *config.Config) {
 
 	// handler
 	authHandler := httptransport.NewAuthHandler(logger, authService)
+	wsHandler := httptransport.NewWebSocketHandler(logger, authService)
 
 	// router
 	router := httptransport.NewRouter(logger, cfg, jwtManager)
-	router.RegisterRoutes(authHandler)
+	router.RegisterRoutes(authHandler, wsHandler)
 
 	go func() {
 		if err := router.Run(ctx); err != nil && errors.Is(err, context.Canceled) {

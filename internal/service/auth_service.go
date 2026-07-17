@@ -70,3 +70,8 @@ func (s *AuthService) Login(ctx context.Context, login, password string) (string
 
 	return token, nil
 }
+
+// GetUserByID returns user by id
+func (s *AuthService) GetUserByID(ctx context.Context, userID string) (*auth.User, error) {
+	return s.repo.GetUserByID(ctx, userID)
+}

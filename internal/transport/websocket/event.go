@@ -20,8 +20,6 @@ type Event struct {
 type EventHandler func(event Event, c *Client) error
 
 const (
-	// EventSendNewToken is the event name for new tokens
-	EventSendNewToken = "send_new_token"
 	// EventSendMessage is the event name for new chat messages sent
 	EventSendMessage = "send_message"
 	// EventNewMessage is a response to send_message
