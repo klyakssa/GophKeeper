@@ -3,8 +3,6 @@ package client
 import (
 	"encoding/json"
 	"gophkeeper/internal/domain/auth"
-	"log"
-	"sync"
 	"time"
 
 	"github.com/fasthttp/websocket"
@@ -24,7 +22,6 @@ type Client struct {
 	connection *websocket.Conn
 
 	uuid string
-	Wg   sync.WaitGroup
 
 	done chan *Client
 
@@ -60,64 +57,10 @@ func NewClient(conn *websocket.Conn, log *zap.Logger, userInfo *auth.User, manag
 	}
 }
 
-// readMessages will start the client to read messages and handle them
-// appropriatly.
-// This is suppose to be ran as a goroutine
-func (c *Client) ReadMessages() {
-	defer func() {
-		// Graceful Close the Connection once this
-		// function is done
-		c.done <- c
-		c.Wg.Done()
-		c.manager.RemoveClient(c)
-	}()
-	// Set Max Size of Messages in Bytes
-	c.connection.SetReadLimit(512)
-	// Configure Wait time for Pong response, use Current time + pongWait
-	// This has to be done here to set the first initial timer.
-	// if err := c.connection.SetReadDeadline(time.Now().Add(pongWait)); err != nil {
-	// 	log.Println(err)
-	// 	return
-	// }
-	// Configure how to handle Pong responses
-	c.connection.SetPongHandler(c.pongHandler)
-
-	// Loop Forever
-	for {
-		// ReadMessage is used to read the next message in queue
-		// in the connection
-		_, payload, err := c.connection.ReadMessage()
-
-		if err != nil {
-			// If Connection is closed, we will Recieve an error here
-			// We only want to log Strange errors, but simple Disconnection
-			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Printf("error reading message: %v", err)
-			}
-			break // Break the loop to close conn & Cleanup
-		}
-		log.Println("message received: ", string(payload))
-		// Marshal incoming data into a Event struct
-		var request Event
-		if err := json.Unmarshal(payload, &request); err != nil {
-			log.Printf("error marshalling message: %v", err)
-			break // Breaking the connection here might be harsh xD
-		}
-		// Route the Event
-		if err := c.manager.routeEvent(request, c); err != nil {
-			log.Println("Error handeling Message: ", err)
-			c.egress <- Event{
-				Type:    EventNewMessage,
-				Payload: []byte(err.Error()),
-			}
-		}
-	}
-}
-
 // pongHandler is used to handle PongMessages for the Client
 func (c *Client) pongHandler(pongMsg string) error {
 	// Current time + Pong Wait time
-	c.log.Info("pong received")
+	c.log.Info("pong received", zap.String("uuid", c.uuid), zap.String("pongMsg", pongMsg), zap.String("login", c.userInfo.Login))
 	return c.connection.SetReadDeadline(time.Now().Add(pongWait))
 }
 
@@ -128,8 +71,6 @@ func (c *Client) WriteMessages() {
 	ticker := time.NewTicker(pingInterval)
 	defer func() {
 		ticker.Stop()
-		// Graceful close if this triggers a closing
-		c.Wg.Done()
 		c.manager.RemoveClient(c)
 	}()
 

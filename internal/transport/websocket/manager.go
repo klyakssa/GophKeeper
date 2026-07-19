@@ -22,34 +22,10 @@ type Manager struct {
 
 // NewManager is used to initalize all the values inside the manager
 func NewManager(ctx context.Context, log *zap.Logger) *Manager {
-	m := &Manager{
+	return &Manager{
 		clients:  make(ClientList),
 		log:      log,
 		handlers: make(map[string]EventHandler),
-	}
-	m.setupEventHandlers()
-	return m
-}
-
-// setupEventHandlers configures and adds all handlers
-func (m *Manager) setupEventHandlers() {
-	m.handlers[EventSendMessage] = SendMessageHandler
-}
-
-// routeEvent is used to make sure the correct event goes into the correct handler
-func (m *Manager) routeEvent(event Event, c *Client) error {
-	if _, ok := m.clients[c.userInfo.Login]; ok {
-		if handler, ok := m.handlers[event.Type]; ok {
-			// Execute the handler and return any err
-			if err := handler(event, c); err != nil {
-				return err
-			}
-			return nil
-		} else {
-			return auth.ErrEventNotSupported
-		}
-	} else {
-		return auth.ErrClientNotConnected
 	}
 }
 
@@ -87,5 +63,14 @@ func (m *Manager) RemoveClient(client *Client) {
 
 	if len(m.clients[client.userInfo.ID]) == 0 {
 		delete(m.clients, client.userInfo.ID)
+	}
+}
+
+// BroadcastMessage will send the message to all clients in the chatroom
+func (m *Manager) BroadcastMessage(c *Client) {
+	for client := range c.manager.clients[c.userInfo.ID] {
+		client.egress <- Event{
+			Type: EventSendMessageToUpdate,
+		}
 	}
 }

@@ -51,6 +51,6 @@ func (w *WebSocketHandler) WebSocketHandler(c *gin.Context) {
 		conn.Close()
 		return
 	}
-	go cl.ReadMessages()
+
 	go cl.WriteMessages()
 }
