@@ -1,0 +1,497 @@
+{"level":"info","timestamp":"2026-07-19 21:33:51","caller":"app/app.go:25","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 21:33:51","caller":"app/app.go:26","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 21:33:51","caller":"app/app.go:27","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 21:33:51","caller":"app/app.go:29","msg":"Initializing database connection..."}
+{"level":"error","timestamp":"2026-07-19 21:33:51","caller":"app/app.go:32","msg":"Failed to initialize database connection","error":"apply migrations: migrate: ERROR 20260717201647_create_secure_table.sql: failed to run SQL migration: failed to execute SQL query \"CREATE TABLE secure_data (\\n    id BIGSERIAL PRIMARY KEY,\\n    data_type VARCHAR(50) NOT NULL CHECK (data_type IN ('credentials', 'text', 'binary', 'card')),\\n    \\n    login VARCHAR(255),\\n    password_encrypted BYTEA,\\n    \\n    text_data TEXT,\\n    \\n    binary_data BYTEA,\\n    binary_mime_type VARCHAR(100),\\n    \\n    card_number_encrypted BYTEA,\\n    card_holder VARCHAR(255),\\n    card_expiry_month SMALLINT CHECK (card_expiry_month BETWEEN 1 AND 12),\\n    card_expiry_year SMALLINT CHECK (card_expiry_year >= 2000),\\n    card_cvv_encrypted BYTEA,\\n    card_type VARCHAR(50)\\n    \\n    metadata VARCHAR(1024),\\n    \\n    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\\n    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\\n    deleted_at TIMESTAMP WITH TIME ZONE,\\n);\": ERROR: syntax error at or near \"metadata\" (SQLSTATE 42601)","stacktrace":"gophkeeper/internal/app.Run\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/app/app.go:32\nmain.main\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/cmd/server/main.go:11\nruntime.main\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-07-19 21:35:08","caller":"app/app.go:25","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 21:35:08","caller":"app/app.go:26","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 21:35:08","caller":"app/app.go:27","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 21:35:08","caller":"app/app.go:29","msg":"Initializing database connection..."}
+{"level":"error","timestamp":"2026-07-19 21:35:08","caller":"app/app.go:32","msg":"Failed to initialize database connection","error":"apply migrations: migrate: ERROR 20260717201647_create_secure_table.sql: failed to run SQL migration: failed to execute SQL query \"CREATE TABLE secure_data (\\n    id BIGSERIAL PRIMARY KEY,\\n    data_type VARCHAR(50) NOT NULL CHECK (data_type IN ('credentials', 'text', 'binary', 'card')),\\n    \\n    login VARCHAR(255),\\n    password_encrypted BYTEA,\\n    \\n    text_data TEXT,\\n    \\n    binary_data BYTEA,\\n    binary_mime_type VARCHAR(100),\\n    \\n    card_number_encrypted BYTEA,\\n    card_holder VARCHAR(255),\\n    card_expiry_month SMALLINT CHECK (card_expiry_month BETWEEN 1 AND 12),\\n    card_expiry_year SMALLINT CHECK (card_expiry_year >= 2000),\\n    card_cvv_encrypted BYTEA,\\n    card_type VARCHAR(50)\\n    \\n    metadata VARCHAR(1024),\\n    \\n    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\\n    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\\n    deleted_at TIMESTAMP WITH TIME ZONE,\\n);\": ERROR: syntax error at or near \"metadata\" (SQLSTATE 42601)","stacktrace":"gophkeeper/internal/app.Run\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/app/app.go:32\nmain.main\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/cmd/server/main.go:11\nruntime.main\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-07-19 21:36:11","caller":"app/app.go:25","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 21:36:11","caller":"app/app.go:26","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 21:36:11","caller":"app/app.go:27","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 21:36:11","caller":"app/app.go:29","msg":"Initializing database connection..."}
+{"level":"error","timestamp":"2026-07-19 21:36:11","caller":"app/app.go:32","msg":"Failed to initialize database connection","error":"apply migrations: migrate: ERROR 20260717201647_create_secure_table.sql: failed to run SQL migration: failed to execute SQL query \"CREATE TABLE secure_data (\\n    id BIGSERIAL PRIMARY KEY,\\n    data_type VARCHAR(50) NOT NULL CHECK (data_type IN ('credentials', 'text', 'binary', 'card')),\\n    \\n    login VARCHAR(255),\\n    password_encrypted BYTEA,\\n    \\n    text_data TEXT,\\n    \\n    binary_data BYTEA,\\n    binary_mime_type VARCHAR(100),\\n    \\n    card_number_encrypted BYTEA,\\n    card_holder VARCHAR(255),\\n    card_expiry_month SMALLINT CHECK (card_expiry_month BETWEEN 1 AND 12),\\n    card_expiry_year SMALLINT CHECK (card_expiry_year >= 2000),\\n    card_cvv_encrypted BYTEA,\\n    card_type VARCHAR(50),\\n    \\n    metadata VARCHAR(1024),\\n    \\n    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\\n    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,\\n    deleted_at TIMESTAMP WITH TIME ZONE,\\n);\": ERROR: syntax error at or near \")\" (SQLSTATE 42601)","stacktrace":"gophkeeper/internal/app.Run\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/app/app.go:32\nmain.main\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/cmd/server/main.go:11\nruntime.main\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-07-19 21:36:42","caller":"app/app.go:25","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 21:36:42","caller":"app/app.go:26","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 21:36:42","caller":"app/app.go:27","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 21:36:42","caller":"app/app.go:29","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 21:36:42","caller":"app/app.go:36","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 21:36:42","caller":"app/app.go:59","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 21:36:42","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 21:39:50","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/register","status":200,"time":0.058349358,"ip":"127.0.0.1"}
+{"level":"error","timestamp":"2026-07-19 21:56:14","caller":"middleware/recovery.go:18","msg":"panic recovered","error":"runtime error: invalid memory address or nil pointer dereference","stack":"goroutine 7 [running]:\nruntime/debug.Stack()\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/debug/stack.go:26 +0x5e\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1.1()\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:20 +0xe9\npanic({0x117f600?, 0x1e0b6a0?})\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/panic.go:783 +0x132\ngophkeeper/internal/transport/websocket.(*Manager).AddClient(0x0, 0xc00023a100)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/websocket/manager.go:34 +0x2e\ngophkeeper/internal/transport/http.(*WebSocketHandler).WebSocketHandler(0xc0004a60c0, 0xc00037c200)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/http/websocket_handler.go:47 +0x385\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.(*Router).RegisterRoutes.AuthMiddleware.func1(0xc00037c200)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/auth.go:33 +0x1ba\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.NewRouter.GzipMiddleware.func3(0xc00037c200)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/gzip.go:34 +0x178\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.NewRouter.LoggingMiddleware.func2(0xc00037c200)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/logging.go:19 +0x289\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1(0xc0000e68a8?)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:31 +0x48\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc0001036c0, 0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:722 +0x475\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc0001036c0, {0x1508860, 0xc0000a44b0}, 0xc0001b6000)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:672 +0x1dc\nnet/http.serverHandler.ServeHTTP({0xc0002aa080?}, {0x1508860?, 0xc0000a44b0?}, 0x1?)\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3340 +0x8e\nnet/http.(*conn).serve(0xc0002ca000, {0x150a268, 0xc0004b6600})\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:2109 +0x665\ncreated by net/http.(*Server).Serve in goroutine 66\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3493 +0x485\n","method":"GET","path":"/api/user/ws","stacktrace":"gophkeeper/internal/transport/http.NewRouter.Recovery.func1.1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:18\nruntime.gopanic\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/panic.go:783\nruntime.panicmem\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/panic.go:262\nruntime.sigpanic\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/signal_unix.go:925\ngophkeeper/internal/transport/websocket.(*Manager).AddClient\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/websocket/manager.go:34\ngophkeeper/internal/transport/http.(*WebSocketHandler).WebSocketHandler\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/http/websocket_handler.go:47\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.(*Router).RegisterRoutes.AuthMiddleware.func1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/auth.go:33\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.GzipMiddleware.func3\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/gzip.go:34\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.LoggingMiddleware.func2\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/logging.go:19\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:31\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:722\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:672\nnet/http.serverHandler.ServeHTTP\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3340\nnet/http.(*conn).serve\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:2109"}
+{"level":"error","timestamp":"2026-07-19 21:56:58","caller":"middleware/recovery.go:18","msg":"panic recovered","error":"runtime error: invalid memory address or nil pointer dereference","stack":"goroutine 84 [running]:\nruntime/debug.Stack()\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/debug/stack.go:26 +0x5e\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1.1()\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:20 +0xe9\npanic({0x117f600?, 0x1e0b6a0?})\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/panic.go:783 +0x132\ngophkeeper/internal/transport/websocket.(*Manager).AddClient(0x0, 0xc00005a180)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/websocket/manager.go:34 +0x2e\ngophkeeper/internal/transport/http.(*WebSocketHandler).WebSocketHandler(0xc0004a60c0, 0xc00037c200)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/http/websocket_handler.go:47 +0x385\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.(*Router).RegisterRoutes.AuthMiddleware.func1(0xc00037c200)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/auth.go:33 +0x1ba\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.NewRouter.GzipMiddleware.func3(0xc00037c200)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/gzip.go:34 +0x178\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.NewRouter.LoggingMiddleware.func2(0xc00037c200)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/logging.go:19 +0x289\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1(0x657057d57?)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:31 +0x48\ngithub.com/gin-gonic/gin.(*Context).Next(0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc0001036c0, 0xc00037c200)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:722 +0x475\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc0001036c0, {0x1508860, 0xc0000a4780}, 0xc0002fe140)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:672 +0x1dc\nnet/http.serverHandler.ServeHTTP({0xc00005a080?}, {0x1508860?, 0xc0000a4780?}, 0x1?)\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3340 +0x8e\nnet/http.(*conn).serve(0xc0002ca2d0, {0x150a268, 0xc0004b6600})\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:2109 +0x665\ncreated by net/http.(*Server).Serve in goroutine 66\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3493 +0x485\n","method":"GET","path":"/api/user/ws","stacktrace":"gophkeeper/internal/transport/http.NewRouter.Recovery.func1.1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:18\nruntime.gopanic\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/panic.go:783\nruntime.panicmem\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/panic.go:262\nruntime.sigpanic\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/signal_unix.go:925\ngophkeeper/internal/transport/websocket.(*Manager).AddClient\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/websocket/manager.go:34\ngophkeeper/internal/transport/http.(*WebSocketHandler).WebSocketHandler\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/http/websocket_handler.go:47\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.(*Router).RegisterRoutes.AuthMiddleware.func1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/auth.go:33\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.GzipMiddleware.func3\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/gzip.go:34\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.LoggingMiddleware.func2\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/logging.go:19\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:31\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:722\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:672\nnet/http.serverHandler.ServeHTTP\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3340\nnet/http.(*conn).serve\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:2109"}
+{"level":"error","timestamp":"2026-07-19 22:00:47","caller":"middleware/recovery.go:18","msg":"panic recovered","error":"runtime error: invalid memory address or nil pointer dereference","stack":"goroutine 86 [running]:\nruntime/debug.Stack()\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/debug/stack.go:26 +0x5e\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1.1()\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:20 +0xe9\npanic({0x117f600?, 0x1e0b6a0?})\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/panic.go:783 +0x132\ngophkeeper/internal/transport/websocket.(*Manager).AddClient(0x0, 0xc00005a1c0)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/websocket/manager.go:34 +0x2e\ngophkeeper/internal/transport/http.(*WebSocketHandler).WebSocketHandler(0xc0004a60c0, 0xc0001c8100)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/http/websocket_handler.go:47 +0x385\ngithub.com/gin-gonic/gin.(*Context).Next(0xc0001c8100)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.(*Router).RegisterRoutes.AuthMiddleware.func1(0xc0001c8100)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/auth.go:33 +0x1ba\ngithub.com/gin-gonic/gin.(*Context).Next(0xc0001c8100)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.NewRouter.GzipMiddleware.func3(0xc0001c8100)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/gzip.go:34 +0x178\ngithub.com/gin-gonic/gin.(*Context).Next(0xc0001c8100)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.NewRouter.LoggingMiddleware.func2(0xc0001c8100)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/logging.go:19 +0x289\ngithub.com/gin-gonic/gin.(*Context).Next(0xc0001c8100)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1(0x7f4ca0ad2b70?)\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:31 +0x48\ngithub.com/gin-gonic/gin.(*Context).Next(0xc0001c8100)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192 +0x5f\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc0001036c0, 0xc0001c8100)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:722 +0x475\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc0001036c0, {0x1508860, 0xc0000a44b0}, 0xc0002fe140)\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:672 +0x1dc\nnet/http.serverHandler.ServeHTTP({0xc00005a040?}, {0x1508860?, 0xc0000a44b0?}, 0x1?)\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3340 +0x8e\nnet/http.(*conn).serve(0xc0002ca000, {0x150a268, 0xc0004b6600})\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:2109 +0x665\ncreated by net/http.(*Server).Serve in goroutine 66\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3493 +0x485\n","method":"GET","path":"/api/user/ws","stacktrace":"gophkeeper/internal/transport/http.NewRouter.Recovery.func1.1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:18\nruntime.gopanic\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/panic.go:783\nruntime.panicmem\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/panic.go:262\nruntime.sigpanic\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/signal_unix.go:925\ngophkeeper/internal/transport/websocket.(*Manager).AddClient\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/websocket/manager.go:34\ngophkeeper/internal/transport/http.(*WebSocketHandler).WebSocketHandler\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/http/websocket_handler.go:47\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.(*Router).RegisterRoutes.AuthMiddleware.func1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/auth.go:33\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.GzipMiddleware.func3\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/gzip.go:34\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.LoggingMiddleware.func2\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/logging.go:19\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:31\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:722\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:672\nnet/http.serverHandler.ServeHTTP\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3340\nnet/http.(*conn).serve\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:2109"}
+{"level":"info","timestamp":"2026-07-19 22:02:09","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:02:09","caller":"app/app.go:62","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:02:09","caller":"app/app.go:68","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:02:12","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:02:12","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:02:12","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:02:12","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:02:12","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:02:12","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:02:12","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:02:19","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.002596588,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:05:14","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001362654,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:05:28","caller":"websocket/client.go:109","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:40704: write: broken pipe"}
+{"level":"warn","timestamp":"2026-07-19 22:06:54","caller":"websocket/client.go:109","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:34274: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:12:09","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:12:09","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:12:09","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:12:11","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:12:11","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:12:11","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:12:11","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:12:11","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:12:11","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:12:11","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:12:14","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.003385081,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:13:26","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001243327,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:13:35","caller":"websocket/client.go:109","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:33728: write: broken pipe"}
+{"level":"warn","timestamp":"2026-07-19 22:15:23","caller":"websocket/client.go:109","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:34386: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:15:46","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001174084,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:20:44","caller":"websocket/client.go:109","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:53136: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:21:43","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:21:43","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:21:43","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:25:52","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:25:52","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:25:52","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:25:52","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:25:52","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:25:52","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:25:52","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:25:54","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.002771617,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:27:06","caller":"websocket/client.go:109","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:45524: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:27:34","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:27:34","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:27:34","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:29:55","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:29:55","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:29:55","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:29:55","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:29:55","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:29:55","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:29:55","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:29:58","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.002661104,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:31:19","caller":"websocket/client.go:110","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:54258: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:32:35","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001328693,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:33:45","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.00144374,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:33:57","caller":"websocket/client.go:110","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:55636: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:34:07","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001165781,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:34:21","caller":"websocket/client.go:110","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:50914: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:34:27","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:34:27","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:34:27","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:34:57","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:34:57","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:34:57","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:34:57","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:34:57","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:34:57","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:34:57","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:35:00","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.002569574,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:35:09","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:35:18","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:35:27","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:35:35","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001177944,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:35:36","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"warn","timestamp":"2026-07-19 22:35:36","caller":"websocket/client.go:111","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:55668: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:35:40","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001131206,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:35:44","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:35:49","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:35:53","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"warn","timestamp":"2026-07-19 22:35:53","caller":"websocket/client.go:111","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:36062: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:35:58","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:36:07","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:36:16","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:36:25","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:36:34","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:36:43","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:36:52","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:37:01","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:37:10","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:37:19","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:37:28","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:37:37","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:37:46","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:37:55","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:38:04","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:38:13","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"info","timestamp":"2026-07-19 22:38:22","caller":"websocket/client.go:109","msg":"ping sent","username":"1"}
+{"level":"warn","timestamp":"2026-07-19 22:38:22","caller":"websocket/client.go:111","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:45368: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:42:03","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:42:03","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:42:03","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:42:05","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:42:05","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:42:05","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:42:05","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:42:05","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:42:05","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:42:05","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:42:07","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":401,"time":0.000069001,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:42:14","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":401,"time":0.000045773,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:43:29","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.053656576,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:43:29","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":401,"time":0.00004008,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:44:18","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.002412915,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:44:27","caller":"websocket/client.go:115","msg":"ping sent","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-19 22:44:36","caller":"websocket/client.go:115","msg":"ping sent","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-19 22:44:45","caller":"websocket/client.go:115","msg":"ping sent","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-19 22:44:54","caller":"websocket/client.go:115","msg":"ping sent","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-19 22:45:03","caller":"websocket/client.go:115","msg":"ping sent","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-19 22:45:12","caller":"websocket/client.go:115","msg":"ping sent","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-19 22:45:21","caller":"websocket/client.go:115","msg":"ping sent","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-19 22:45:30","caller":"websocket/client.go:115","msg":"ping sent","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-19 22:45:34","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:45:34","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:45:34","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:45:36","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:45:36","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:45:36","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:45:36","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:45:36","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:45:36","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:45:36","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:45:42","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.003152957,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:47:40","caller":"websocket/client.go:121","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:49710: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:48:13","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:48:13","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:48:13","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:48:15","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:48:15","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:48:15","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:48:15","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:48:15","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:48:15","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:48:15","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:48:19","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.003060794,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:48:26","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001276552,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:48:37","caller":"websocket/client.go:121","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:46564: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:50:19","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:50:19","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:50:19","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:51:52","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:51:52","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:51:52","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:51:52","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:51:52","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:51:52","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:51:52","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:51:57","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.003454565,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:54:19","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001240646,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-19 22:54:30","caller":"websocket/client.go:118","msg":"error sending ping","error":"write tcp 127.0.0.1:8100->127.0.0.1:58156: write: broken pipe"}
+{"level":"info","timestamp":"2026-07-19 22:56:13","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:56:13","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:56:13","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:56:15","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:56:15","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:56:15","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:56:15","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:56:16","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:56:16","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:56:16","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:56:18","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.002797288,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:58:19","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:58:19","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:58:19","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:58:20","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:58:20","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:58:20","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:58:20","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:58:21","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:58:21","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:58:21","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:58:30","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.00311349,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 22:59:50","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 22:59:50","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 22:59:50","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 22:59:52","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 22:59:52","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 22:59:52","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 22:59:52","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 22:59:52","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 22:59:52","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 22:59:52","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 22:59:55","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.00346242,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 23:01:43","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 23:01:43","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 23:01:43","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-19 23:01:45","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-19 23:01:45","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-19 23:01:45","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-19 23:01:45","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-19 23:01:45","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-19 23:01:45","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-19 23:01:45","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-19 23:01:48","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.002492716,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-19 23:02:01","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-19 23:02:01","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-19 23:02:01","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:11:03","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:11:03","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:11:03","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:11:03","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"error","timestamp":"2026-07-20 19:11:03","caller":"app/app.go:33","msg":"Failed to initialize database connection","error":"apply migrations: migrate: failed to connect to `user=test database=diplom`: 127.0.0.1:5432 (localhost): dial error: dial tcp 127.0.0.1:5432: connect: connection refused; failed to connect to `user=test database=diplom`: 127.0.0.1:5432 (localhost): dial error: dial tcp 127.0.0.1:5432: connect: connection refused","stacktrace":"gophkeeper/internal/app.Run\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/app/app.go:33\nmain.main\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/cmd/server/main.go:11\nruntime.main\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-07-20 19:11:43","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:11:43","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:11:43","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:11:43","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:11:43","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:11:43","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:11:43","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:13:22","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":401,"time":0.000057568,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:16:28","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.126399603,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:16:28","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":401,"time":0.000024975,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:21:43","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.04933854,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:21:43","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001527851,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:25:55","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:25:55","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:25:55","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:26:08","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:26:08","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:26:08","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:26:08","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:26:08","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:26:08","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:26:08","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:26:31","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:26:31","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:26:31","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:26:33","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:26:33","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:26:33","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:26:33","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:26:33","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:26:33","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:26:33","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:26:37","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.069085715,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:26:37","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001226371,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:26:46","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:26:56","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:27:05","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:27:08","caller":"websocket/client.go:160","msg":"ping received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:27:14","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:27:23","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:27:34","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:27:40","caller":"websocket/client.go:160","msg":"ping received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:27:43","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:27:52","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:02","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:11","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:11","caller":"websocket/client.go:160","msg":"ping received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:20","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:31","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:40","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:43","caller":"websocket/client.go:160","msg":"ping received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:49","caller":"websocket/client.go:154","msg":"pong received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:54","caller":"websocket/client.go:166","msg":"close received","uuid":"9120aa60-ad45-4467-be64-8d4caedc4b9a","code":1000,"text":"closing","login":"klyaksa"}
+{"level":"error","timestamp":"2026-07-20 19:28:54","caller":"websocket/client.go:79","msg":"","stacktrace":"gophkeeper/internal/transport/websocket.(*Client).ReadMessages\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/websocket/client.go:79"}
+{"level":"info","timestamp":"2026-07-20 19:28:54","caller":"websocket/client.go:138","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:28:55","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.048277031,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:28:55","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.000742958,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:29:02","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:06","caller":"websocket/client.go:154","msg":"pong received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:07","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:12","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:15","caller":"websocket/client.go:154","msg":"pong received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:17","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:22","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:24","caller":"websocket/client.go:154","msg":"pong received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:27","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:33","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:34","caller":"websocket/client.go:154","msg":"pong received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:38","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:43","caller":"websocket/client.go:154","msg":"pong received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:43","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:48","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:52","caller":"websocket/client.go:154","msg":"pong received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:53","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:58","caller":"websocket/client.go:160","msg":"ping received","uuid":"1a9de271-af06-4ef2-a34f-17ba352ed148","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:29:59","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:29:59","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:29:59","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:29:59","caller":"websocket/client.go:138","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:31:33","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:31:33","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:31:33","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:31:33","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:31:33","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:31:33","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:31:33","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:31:37","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.053384785,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:31:37","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001224217,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:31:46","caller":"websocket/client.go:144","msg":"pong received","uuid":"4e5bf1a2-2f69-4c55-917a-ba82f12a48b8","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:31:55","caller":"websocket/client.go:144","msg":"pong received","uuid":"4e5bf1a2-2f69-4c55-917a-ba82f12a48b8","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:32:02","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:32:02","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:32:02","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:32:02","caller":"websocket/client.go:128","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:35:37","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:35:37","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:35:37","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:35:37","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:35:37","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:35:37","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:35:37","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:35:39","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.051048233,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:35:39","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001156768,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:35:50","caller":"websocket/client.go:152","msg":"pong received","uuid":"d174145f-92c8-4533-8c85-b6b076ffe2f1","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:35:52","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:35:52","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:35:52","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:35:52","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:40:40","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:40:40","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:40:40","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:40:40","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:40:40","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:40:40","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:40:40","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:40:53","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.051375415,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:40:53","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001291365,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:41:02","caller":"websocket/client.go:152","msg":"pong received","uuid":"4da7b233-101f-443b-8840-7d4a60cb4cce","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:41:05","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:41:05","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:41:05","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:41:05","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:42:06","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:42:06","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:42:06","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:42:06","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:42:06","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:42:06","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:42:06","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:42:10","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.051517108,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:42:10","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001275271,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:42:19","caller":"websocket/client.go:152","msg":"pong received","uuid":"798487b0-65d3-4c28-845e-d965b214c028","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:42:22","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:42:22","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:42:22","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:42:22","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:44:01","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:44:01","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:44:01","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:44:01","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:44:01","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:44:01","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:44:01","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:44:04","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.051196508,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:44:04","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001260923,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:44:13","caller":"websocket/client.go:152","msg":"pong received","uuid":"fb0ae534-556e-4a2f-a18c-3884b73dcf95","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:44:15","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:44:15","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:44:15","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:44:15","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:45:40","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:45:40","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:45:40","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:45:40","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:45:40","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:45:40","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:45:40","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:45:43","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.051913025,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:45:43","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001301688,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:45:54","caller":"websocket/client.go:152","msg":"pong received","uuid":"5fbbf02e-f771-41e3-9323-5b1bde4ecfc5","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:45:58","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:45:58","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:49:23","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:49:23","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:49:23","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:49:23","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:49:23","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:49:23","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:49:23","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:49:26","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.05211679,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:49:26","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001535737,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:49:37","caller":"websocket/client.go:152","msg":"pong received","uuid":"330c7552-e32f-4ac5-90ef-bef9529a68bf","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:49:38","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:49:38","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:49:38","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:49:38","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 19:53:58","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 19:53:58","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 19:53:58","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 19:53:58","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 19:53:59","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 19:53:59","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 19:53:59","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 19:54:00","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.05080196,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:54:00","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001290139,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 19:54:10","caller":"websocket/client.go:152","msg":"pong received","uuid":"b8dd66dc-37a6-429e-b9f7-ce0ca72e6e5f","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:54:11","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 19:54:11","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 19:54:11","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 19:54:11","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-20 20:40:41","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-20 20:40:41","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-20 20:40:41","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-20 20:40:41","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-20 20:40:41","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-20 20:40:41","caller":"app/app.go:62","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-20 20:40:41","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"info","timestamp":"2026-07-20 20:40:44","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.058359234,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 20:40:44","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001403953,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-20 20:40:53","caller":"websocket/client.go:152","msg":"pong received","uuid":"5856eacb-4cdd-4b39-aa99-c8546d511c57","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 20:40:56","caller":"websocket/client.go:157","msg":"close received","uuid":"5856eacb-4cdd-4b39-aa99-c8546d511c57","code":1000,"text":"closing","login":"klyaksa"}
+{"level":"error","timestamp":"2026-07-20 20:40:56","caller":"websocket/client.go:84","msg":"","stacktrace":"gophkeeper/internal/transport/websocket.(*Client).ReadMessages\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/websocket/client.go:84"}
+{"level":"info","timestamp":"2026-07-20 20:40:56","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-20 20:55:32","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-20 20:55:32","caller":"app/app.go:65","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-20 20:55:32","caller":"app/app.go:75","msg":"Application terminated gracefully"}
+{"level":"info","timestamp":"2026-07-24 11:03:48","caller":"app/app.go:26","msg":"Config initialized:"}
+{"level":"info","timestamp":"2026-07-24 11:03:48","caller":"app/app.go:27","msg":"Debug mode: false"}
+{"level":"info","timestamp":"2026-07-24 11:03:48","caller":"app/app.go:28","msg":"App name: gopkeeper"}
+{"level":"info","timestamp":"2026-07-24 11:03:48","caller":"app/app.go:30","msg":"Initializing database connection..."}
+{"level":"info","timestamp":"2026-07-24 11:03:48","caller":"app/app.go:39","msg":"Starting application..."}
+{"level":"info","timestamp":"2026-07-24 11:03:48","caller":"app/app.go:64","msg":"Application started"}
+{"level":"info","timestamp":"2026-07-24 11:03:48","caller":"http/router.go:56","msg":"HTTP server started on address :8100"}
+{"level":"error","timestamp":"2026-07-24 11:04:14","caller":"http/auth_handler.go:71","msg":"Invalid request","error":"Key: 'loginRequest.Login' Error:Field validation for 'Login' failed on the 'required' tag","stacktrace":"gophkeeper/internal/transport/http.(*AuthHandler).Login\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/http/auth_handler.go:71\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.GzipMiddleware.func3\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/gzip.go:34\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.LoggingMiddleware.func2\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/logging.go:19\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:31\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:722\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:672\nnet/http.serverHandler.ServeHTTP\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3340\nnet/http.(*conn).serve\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:2109"}
+{"level":"info","timestamp":"2026-07-24 11:04:14","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":400,"time":0.000522666,"ip":"127.0.0.1"}
+{"level":"error","timestamp":"2026-07-24 11:04:21","caller":"http/auth_handler.go:71","msg":"Invalid request","error":"Key: 'loginRequest.Login' Error:Field validation for 'Login' failed on the 'required' tag","stacktrace":"gophkeeper/internal/transport/http.(*AuthHandler).Login\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/transport/http/auth_handler.go:71\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.GzipMiddleware.func3\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/gzip.go:34\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.LoggingMiddleware.func2\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/logging.go:19\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngophkeeper/internal/transport/http.NewRouter.Recovery.func1\n\t/mnt/d/go/src/kuzmin.spb.ru/GophKeeper/internal/middleware/recovery.go:31\ngithub.com/gin-gonic/gin.(*Context).Next\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/context.go:192\ngithub.com/gin-gonic/gin.(*Engine).handleHTTPRequest\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:722\ngithub.com/gin-gonic/gin.(*Engine).ServeHTTP\n\t/home/klyaksa/go/pkg/mod/github.com/gin-gonic/gin@v1.12.0/gin.go:672\nnet/http.serverHandler.ServeHTTP\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:3340\nnet/http.(*conn).serve\n\t/home/klyaksa/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/net/http/server.go:2109"}
+{"level":"info","timestamp":"2026-07-24 11:04:21","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":400,"time":0.000679815,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-24 11:06:37","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.135429861,"ip":"127.0.0.1"}
+{"level":"warn","timestamp":"2026-07-24 11:09:08","caller":"http/auth_handler.go:81","msg":"User not found","login":"klyakas"}
+{"level":"info","timestamp":"2026-07-24 11:09:08","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":404,"time":0.002412639,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-24 11:09:20","caller":"middleware/logging.go:21","msg":"request","method":"POST","path":"/api/user/login","status":200,"time":0.049379844,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-24 11:11:02","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.004883366,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-24 11:11:11","caller":"websocket/client.go:152","msg":"pong received","uuid":"364ef2bc-5cd7-4639-9b94-c0cdb28455d9","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:11:22","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:11:24","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001257552,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-24 11:11:33","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:11:42","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:11:52","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:12:01","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:12:10","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:12:21","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:12:30","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:12:39","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:12:48","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:12:58","caller":"websocket/client.go:152","msg":"pong received","uuid":"67d45f39-5304-415f-8e61-f79ee0ea655b","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:13:00","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:13:02","caller":"middleware/logging.go:21","msg":"request","method":"GET","path":"/api/user/ws","status":200,"time":0.001229103,"ip":"127.0.0.1"}
+{"level":"info","timestamp":"2026-07-24 11:13:11","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:13:20","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:13:31","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:13:40","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:13:49","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:13:59","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:14:08","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:14:17","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:14:27","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:14:36","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:14:45","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:14:54","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:15:05","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:15:14","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:15:23","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:15:33","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:15:42","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:15:51","caller":"websocket/client.go:152","msg":"pong received","uuid":"926a2e9e-f7eb-478f-b7ff-e3c988fd5b63","pongMsg":"","login":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:15:58","caller":"websocket/client.go:127","msg":"Closing connection","username":"klyaksa"}
+{"level":"info","timestamp":"2026-07-24 11:17:30","caller":"http/router.go:64","msg":"HTTP server shutdown triggered by context"}
+{"level":"info","timestamp":"2026-07-24 11:17:30","caller":"app/app.go:67","msg":"Shutting down application..."}
+{"level":"info","timestamp":"2026-07-24 11:17:30","caller":"app/app.go:77","msg":"Application terminated gracefully"}

@@ -71,7 +71,7 @@ func (r *Router) Run(ctx context.Context) error {
 }
 
 // RegisterRoutes registers routes
-func (r *Router) RegisterRoutes(authHandler *AuthHandler, wsHandler *WebSocketHandler) {
+func (r *Router) RegisterRoutes(authHandler *AuthHandler, wsHandler *WebSocketHandler, secureHandler *SecureHandler) {
 	api := r.engine.Group("/api/user")
 	{
 		api.POST("/register", authHandler.Register)
@@ -80,6 +80,10 @@ func (r *Router) RegisterRoutes(authHandler *AuthHandler, wsHandler *WebSocketHa
 		auth.Use(middleware.AuthMiddleware(r.jwtManager))
 		{
 			auth.GET("/ws", wsHandler.WebSocketHandler)
+			auth.GET("/secure", secureHandler.GetSecureHandler)
+			auth.POST("/secure", secureHandler.CreateSecureHandler)
+			auth.DELETE("/secure", secureHandler.DeleteSecureHandler)
+			auth.PUT("/secure", secureHandler.UpdateSecureHandler)
 		}
 	}
 }

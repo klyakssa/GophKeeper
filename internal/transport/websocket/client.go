@@ -3,6 +3,7 @@ package client
 import (
 	"encoding/json"
 	"gophkeeper/internal/domain/auth"
+	"gophkeeper/internal/logger"
 	"time"
 
 	"github.com/fasthttp/websocket"
@@ -25,7 +26,7 @@ type Client struct {
 
 	done chan *Client
 
-	log *zap.Logger
+	log *logger.Logger
 
 	userInfo *auth.User
 
@@ -45,7 +46,7 @@ var (
 )
 
 // NewClient is used to initialize a new Client with all required values initialized
-func NewClient(conn *websocket.Conn, log *zap.Logger, userInfo *auth.User, manager *Manager) *Client {
+func NewClient(conn *websocket.Conn, log *logger.Logger, userInfo *auth.User, manager *Manager) *Client {
 	return &Client{
 		connection: conn,
 		uuid:       genUUID(),
@@ -57,17 +58,40 @@ func NewClient(conn *websocket.Conn, log *zap.Logger, userInfo *auth.User, manag
 	}
 }
 
-// pongHandler is used to handle PongMessages for the Client
-func (c *Client) pongHandler(pongMsg string) error {
-	// Current time + Pong Wait time
-	c.log.Info("pong received", zap.String("uuid", c.uuid), zap.String("pongMsg", pongMsg), zap.String("login", c.userInfo.Login))
-	return c.connection.SetReadDeadline(time.Now().Add(pongWait))
+func (c *Client) ReadMessages() {
+	defer func() {
+		// Graceful Close the Connection once this
+		// function is done
+		c.done <- c
+		c.manager.RemoveClient(c)
+	}()
+	if err := c.connection.SetReadDeadline(time.Now().Add(pongWait)); err != nil {
+		c.log.Warn("error setting read deadline", zap.Error(err))
+		return
+	}
+	c.connection.SetReadLimit(512)
+	c.connection.SetPongHandler(c.pongHandler)
+	c.connection.SetCloseHandler(c.closeHandler)
+	for {
+		// ReadMessage is used to read the next message in queue
+		// in the connection
+		_, payload, err := c.connection.ReadMessage()
+
+		if err != nil {
+			// If Connection is closed, we will Recieve an error here
+			// We only want to log Strange errors, but simple Disconnection
+			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+				break
+			}
+			break // Break the loop to close conn & Cleanup
+		}
+		c.log.Info("message received: ", zap.String("message", string(payload)))
+	}
 }
 
 // writeMessages is a process that listens for new messages to output to the Client
 func (c *Client) WriteMessages() {
 	// Create a ticker that triggers a ping at given interval
-
 	ticker := time.NewTicker(pingInterval)
 	defer func() {
 		ticker.Stop()
@@ -112,6 +136,27 @@ func (c *Client) WriteMessages() {
 		}
 
 	}
+}
+
+func (c *Client) Close() error {
+	err := c.connection.WriteMessage(websocket.CloseMessage,
+		websocket.FormatCloseMessage(websocket.CloseNormalClosure, "closing"))
+	if err != nil {
+		c.log.Info("error writing close message", zap.Error(err))
+	}
+	return c.connection.Close()
+}
+
+func (c *Client) pongHandler(pongMsg string) error {
+	// Current time + Pong Wait time
+	c.log.Info("pong received", zap.String("uuid", c.uuid), zap.String("pongMsg", pongMsg), zap.String("login", c.userInfo.Login))
+	return c.connection.SetReadDeadline(time.Now().Add(pongWait))
+}
+
+func (c *Client) closeHandler(code int, text string) error {
+	c.log.Info("close received", zap.String("uuid", c.uuid), zap.Int("code", code), zap.String("text", text), zap.String("login", c.userInfo.Login))
+	c.done <- c
+	return c.connection.Close()
 }
 
 func genUUID() string {

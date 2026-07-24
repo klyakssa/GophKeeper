@@ -35,22 +35,23 @@ type SecureData struct {
 }
 
 type SecureDataCreate struct {
-	DataType            DataType `json:"data_type" validate:"required,oneof=credentials text binary card"`
-	Login               string   `json:"login,omitempty"`
-	PasswordEncrypted   []byte   `json:"password_encrypted,omitempty"`
-	TextData            string   `json:"text_data,omitempty"`
-	BinaryData          []byte   `json:"binary_data,omitempty"`
-	BinaryMimeType      string   `json:"binary_mime_type,omitempty"`
-	CardNumberEncrypted []byte   `json:"card_number_encrypted,omitempty"`
-	CardHolder          string   `json:"card_holder,omitempty"`
-	CardExpiryMonth     int16    `json:"card_expiry_month,omitempty"`
-	CardExpiryYear      int16    `json:"card_expiry_year,omitempty"`
-	CardCvvEncrypted    []byte   `json:"card_cvv_encrypted,omitempty"`
-	CardType            string   `json:"card_type,omitempty"`
-	Metadata            string   `json:"metadata"`
+	DataType        DataType `json:"data_type" validate:"required,oneof=credentials text binary card"`
+	Login           string   `json:"login,omitempty"`
+	Password        []byte   `json:"password,omitempty"`
+	TextData        string   `json:"text_data,omitempty"`
+	BinaryData      []byte   `json:"binary_data,omitempty"`
+	BinaryMimeType  string   `json:"binary_mime_type,omitempty"`
+	CardNumber      []byte   `json:"card_number,omitempty"`
+	CardHolder      string   `json:"card_holder,omitempty"`
+	CardExpiryMonth int16    `json:"card_expiry_month,omitempty"`
+	CardExpiryYear  int16    `json:"card_expiry_year,omitempty"`
+	CardCvv         []byte   `json:"card_cvv,omitempty"`
+	CardType        string   `json:"card_type,omitempty"`
+	Metadata        string   `json:"metadata"`
 }
 
 type SecureDataUpdate struct {
+	ID                  int64     `json:"id"`
 	DataType            *DataType `json:"data_type,omitempty"`
 	Login               *string   `json:"login,omitempty"`
 	PasswordEncrypted   []byte    `json:"password_encrypted,omitempty"`

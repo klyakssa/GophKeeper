@@ -9,6 +9,7 @@ import (
 	"gophkeeper/internal/repository/postgres"
 	"gophkeeper/internal/service"
 	httptransport "gophkeeper/internal/transport/http"
+	client "gophkeeper/internal/transport/websocket"
 	"gophkeeper/pkg/jwt"
 	"os"
 	"os/signal"
@@ -33,6 +34,8 @@ func Run(cfg *config.Config) {
 		return
 	}
 
+	manager := client.NewManager(ctx, logger.Logger)
+
 	logger.Info("Starting application...")
 
 	// jwt
@@ -40,14 +43,16 @@ func Run(cfg *config.Config) {
 
 	// сервис
 	authService := service.NewAuthService(repo, jwtManager)
+	secureService := service.NewSecureService(repo)
 
 	// handler
 	authHandler := httptransport.NewAuthHandler(logger, authService)
-	wsHandler := httptransport.NewWebSocketHandler(logger, authService)
+	wsHandler := httptransport.NewWebSocketHandler(logger, authService, manager)
+	secureHandler := httptransport.NewSecureHandler(secureService, logger, manager)
 
 	// router
 	router := httptransport.NewRouter(logger, cfg, jwtManager)
-	router.RegisterRoutes(authHandler, wsHandler)
+	router.RegisterRoutes(authHandler, wsHandler, secureHandler)
 
 	go func() {
 		if err := router.Run(ctx); err != nil && errors.Is(err, context.Canceled) {
@@ -63,6 +68,10 @@ func Run(cfg *config.Config) {
 
 	if err := repo.Close(); err != nil {
 		logger.Error("Failed to close database connection", zap.Error(err))
+	}
+
+	if err := manager.Close(); err != nil {
+		logger.Error("Failed to close websocket connection", zap.Error(err))
 	}
 
 	logger.Info("Application terminated gracefully")

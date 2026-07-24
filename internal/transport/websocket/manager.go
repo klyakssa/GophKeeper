@@ -67,10 +67,27 @@ func (m *Manager) RemoveClient(client *Client) {
 }
 
 // BroadcastMessage will send the message to all clients in the chatroom
-func (m *Manager) BroadcastMessage(c *Client) {
-	for client := range c.manager.clients[c.userInfo.ID] {
+func (m *Manager) BroadcastMessage(userID string) {
+	m.RLock()
+	defer m.RUnlock()
+
+	for client := range m.clients[userID] {
 		client.egress <- Event{
 			Type: EventSendMessageToUpdate,
 		}
 	}
+}
+
+func (m *Manager) Close() error {
+	m.Lock()
+	defer m.Unlock()
+	for _, clients := range m.clients {
+		for client := range clients {
+			if err := client.Close(); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }

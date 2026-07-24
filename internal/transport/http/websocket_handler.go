@@ -23,8 +23,8 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-func NewWebSocketHandler(log *logger.Logger, service auth.Service) *WebSocketHandler {
-	return &WebSocketHandler{log: log, service: service}
+func NewWebSocketHandler(log *logger.Logger, service auth.Service, manager *client.Manager) *WebSocketHandler {
+	return &WebSocketHandler{log: log, service: service, manager: manager}
 }
 
 func (w *WebSocketHandler) WebSocketHandler(c *gin.Context) {
@@ -43,7 +43,7 @@ func (w *WebSocketHandler) WebSocketHandler(c *gin.Context) {
 		return
 	}
 
-	cl := client.NewClient(conn, w.log.Logger, user, w.manager)
+	cl := client.NewClient(conn, w.log, user, w.manager)
 	err = w.manager.AddClient(cl)
 	if err != nil {
 		log.Println(err)
@@ -53,4 +53,6 @@ func (w *WebSocketHandler) WebSocketHandler(c *gin.Context) {
 	}
 
 	go cl.WriteMessages()
+	go cl.ReadMessages()
+
 }
