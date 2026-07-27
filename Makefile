@@ -11,3 +11,7 @@ s:
 
 c:
 	go run cmd/client/client.go
+
+test:
+	go clean -testcache
+	go test -count 1 -v -cover ./...

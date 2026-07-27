@@ -142,19 +142,19 @@ func (c *Client) Close() error {
 	err := c.connection.WriteMessage(websocket.CloseMessage,
 		websocket.FormatCloseMessage(websocket.CloseNormalClosure, "closing"))
 	if err != nil {
-		c.log.Info("error writing close message", zap.Error(err))
+		c.log.Debug("error writing close message", zap.Error(err))
 	}
 	return c.connection.Close()
 }
 
 func (c *Client) pongHandler(pongMsg string) error {
 	// Current time + Pong Wait time
-	c.log.Info("pong received", zap.String("uuid", c.uuid), zap.String("pongMsg", pongMsg), zap.String("login", c.userInfo.Login))
+	c.log.Debug("pong received", zap.String("uuid", c.uuid), zap.String("pongMsg", pongMsg), zap.String("login", c.userInfo.Login))
 	return c.connection.SetReadDeadline(time.Now().Add(pongWait))
 }
 
 func (c *Client) closeHandler(code int, text string) error {
-	c.log.Info("close received", zap.String("uuid", c.uuid), zap.Int("code", code), zap.String("text", text), zap.String("login", c.userInfo.Login))
+	c.log.Debug("close received", zap.String("uuid", c.uuid), zap.Int("code", code), zap.String("text", text), zap.String("login", c.userInfo.Login))
 	c.done <- c
 	return c.connection.Close()
 }

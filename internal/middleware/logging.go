@@ -24,6 +24,7 @@ func LoggingMiddleware(logger *zap.Logger) gin.HandlerFunc {
 			zap.Int("status", c.Writer.Status()),
 			zap.Duration("time", time.Since(start)),
 			zap.String("ip", c.ClientIP()),
+			zap.String("user_id", c.GetString("user_id")),
 		)
 	}
 }

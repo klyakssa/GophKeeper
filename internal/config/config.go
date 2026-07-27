@@ -11,7 +11,10 @@ import (
 )
 
 type WebServerConfig struct {
-	RunAddress string `mapstructure:"run-address"` // run address
+	RunAddress  string `mapstructure:"run-address"` // run address
+	EnableHTTPS bool   `mapstructure:"enable-https"`
+	CertFile    string `mapstructure:"cert-file"`
+	KeyFile     string `mapstructure:"key-file"`
 }
 
 type AppConfig struct {
@@ -106,6 +109,9 @@ func loadDefault() {
 	viper.SetDefault("logging.max-age", 30)
 
 	viper.SetDefault("web.run-address", ":8100")
+	viper.SetDefault("web.enable-https", true)
+	viper.SetDefault("web.cert-file", "server.crt")
+	viper.SetDefault("web.key-file", "server.key")
 
 	viper.SetDefault("postdb.connection-string", "postgres://test:11@localhost:5432/diplom?sslmode=disable") //postgres://postgres:11@localhost:5432/test_prac?sslmode=disable
 

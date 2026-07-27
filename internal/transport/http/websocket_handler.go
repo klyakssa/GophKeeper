@@ -4,11 +4,11 @@ import (
 	"gophkeeper/internal/domain/auth"
 	"gophkeeper/internal/logger"
 	client "gophkeeper/internal/transport/websocket"
-	"log"
 	"net/http"
 
 	"github.com/fasthttp/websocket"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type WebSocketHandler struct {
@@ -31,13 +31,13 @@ func (w *WebSocketHandler) WebSocketHandler(c *gin.Context) {
 
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		log.Print("Failed to upgrade connection:", err)
+		w.log.Error("Failed to upgrade connection", zap.Error(err))
 		return
 	}
 
 	user, err := w.service.GetUserByID(c.Request.Context(), c.GetString("user_id"))
 	if err != nil {
-		log.Println(err)
+		w.log.Error("Failed to get user", zap.Error(err))
 		conn.WriteMessage(websocket.CloseMessage, nil)
 		conn.Close()
 		return
@@ -46,7 +46,7 @@ func (w *WebSocketHandler) WebSocketHandler(c *gin.Context) {
 	cl := client.NewClient(conn, w.log, user, w.manager)
 	err = w.manager.AddClient(cl)
 	if err != nil {
-		log.Println(err)
+		w.log.Error("Failed to add client", zap.Error(err))
 		conn.WriteMessage(websocket.CloseMessage, nil)
 		conn.Close()
 		return

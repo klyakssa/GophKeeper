@@ -21,10 +21,10 @@ func (s *SecureService) GetSecureData(ctx context.Context, userID string) ([]sec
 	return s.repo.GetSecureData(ctx, userID)
 }
 
-func (s *SecureService) DeleteSecureData(ctx context.Context, userID string, id string) error {
+func (s *SecureService) DeleteSecureData(ctx context.Context, userID string, id int) error {
 	return s.repo.DeleteSecureData(ctx, userID, id)
 }
 
-func (s *SecureService) UpdateSecureData(ctx context.Context, req *secure.SecureDataUpdate, userid string) error {
-	return s.repo.UpdateSecureData(ctx, req, userid)
+func (s *SecureService) UpdateSecureData(ctx context.Context, req *secure.SecureDataUpdate) error {
+	return s.repo.UpdateSecureData(ctx, req)
 }

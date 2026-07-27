@@ -2,10 +2,13 @@ package main
 
 import (
 	"bufio"
+	"crypto/tls"
 	"fmt"
 	"log"
+	"net/http"
 	"net/url"
 	"os"
+	"os/signal"
 	"strings"
 	"time"
 
@@ -33,6 +36,9 @@ func NewWsClient(serverURL string) *WsClient {
 		HandshakeTimeout: 10 * time.Second,
 		ReadBufferSize:   4096,
 		WriteBufferSize:  4096,
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true,
+		},
 	}
 
 	return &WsClient{
@@ -64,7 +70,6 @@ func (c *WsClient) Connect(token string) error {
 	defer resp.Body.Close()
 
 	c.conn = conn
-	log.Printf("Connected to WebSocket server: %s", c.url)
 
 	c.conn.SetPingHandler(func(appData string) error {
 		if err := c.SendPong(); err != nil {
@@ -89,7 +94,7 @@ func (c *WsClient) readMessages() {
 			var msg Message
 			err := c.conn.ReadJSON(&msg)
 			if err != nil {
-				if websocket.IsUnexpectedCloseError(err,
+				if !websocket.IsUnexpectedCloseError(err,
 					websocket.CloseGoingAway,
 					websocket.CloseAbnormalClosure,
 					websocket.CloseNormalClosure) {
@@ -137,7 +142,7 @@ func (c *WsClient) SendPong() error {
 
 func (c *WsClient) closeHandler(code int, text string) error {
 	defer close(c.done)
-	log.Printf("close received, code: %d, text: %v", code, text)
+	fmt.Println("WebSocket connection closed. Try to relogin.")
 	return c.conn.Close()
 }
 
@@ -217,7 +222,16 @@ type Client struct {
 }
 
 func NewClient(baseURL string) *Client {
-	client := resty.New().
+	httpClient := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: true,
+			},
+		},
+		Timeout: 30 * time.Second,
+	}
+
+	client := resty.NewWithClient(httpClient).
 		SetBaseURL(baseURL).
 		SetTimeout(30*time.Second).
 		SetHeader("Content-Type", "application/json").
@@ -226,7 +240,7 @@ func NewClient(baseURL string) *Client {
 		SetRetryWaitTime(2 * time.Second).
 		SetRetryMaxWaitTime(10 * time.Second)
 
-	wsURL := "ws://" + strings.TrimPrefix(baseURL, "http://") + "/api/user/ws"
+	wsURL := "wss://" + strings.TrimPrefix(baseURL, "https://") + "/api/user/ws"
 
 	fmt.Printf("Ws url: %s\n", wsURL)
 
@@ -243,16 +257,17 @@ const (
 
 func (c *Client) SetToken(token string) {
 	if c.Token != "" {
-		if err := c.Ws.Close(); err != nil {
-			fmt.Printf("Failed to close WebSocket connection: %v\n", err)
-			os.Exit(1)
+		if c.Ws.conn != nil {
+			if err := c.Ws.Close(); err != nil {
+				fmt.Printf("Failed to close WebSocket connection: %v\n", err)
+				os.Exit(1)
+			}
 		}
 	}
 	c.Token = token
 	c.SaveTokenToFile(TokenFile)
 	if err := c.Ws.Connect(token); err != nil {
-		fmt.Printf("Failed to connect to WebSocket server: %v\n", err)
-		os.Exit(1)
+		fmt.Printf("Failed to connect to WebSocket serve: %v\n Please register first or login again\n", err)
 	}
 	c.Resty.SetAuthToken(token)
 }
@@ -366,19 +381,41 @@ func (c *Client) GetSecureData() error {
 		if item.Login != "" {
 			fmt.Printf("  Login: %s\n", item.Login)
 		}
+		if item.PasswordEncrypted != nil {
+			fmt.Printf("  Password: %s\n", string(item.PasswordEncrypted))
+		}
 		if item.TextData != "" {
 			fmt.Printf("  Text: %s\n", item.TextData)
 		}
-		if item.Metadata != "" {
-			fmt.Printf("  Metadata: %s\n", item.Metadata)
+		if item.BinaryData != nil {
+			fmt.Printf("  Binary Data: %s\n", item.BinaryData)
 		}
-		if item.CardHolder != "" {
-			fmt.Printf("  Card Holder: %s\n", item.CardHolder)
+		if item.BinaryMimeType != "" {
+			fmt.Printf("  Binary Mime Type: %s\n", item.BinaryMimeType)
 		}
 		if item.CardType != "" {
 			fmt.Printf("  Card Type: %s\n", item.CardType)
 		}
+		if item.CardNumberEncrypted != nil {
+			fmt.Printf("  Card Number: %s\n", string(item.CardNumberEncrypted))
+		}
+		if item.CardHolder != "" {
+			fmt.Printf("  Card Holder: %s\n", item.CardHolder)
+		}
+		if item.CardExpiryMonth != 0 {
+			fmt.Printf("  Card Expiry Month: %d\n", item.CardExpiryMonth)
+		}
+		if item.CardExpiryYear != 0 {
+			fmt.Printf("  Card Expiry Year: %d\n", item.CardExpiryYear)
+		}
+		if item.CardCvvEncrypted != nil {
+			fmt.Printf("  Card CVV: %s\n", string(item.CardCvvEncrypted))
+		}
+		if item.Metadata != "" {
+			fmt.Printf("  Metadata: %s\n", item.Metadata)
+		}
 		fmt.Printf("  Created: %s\n", item.CreatedAt)
+		fmt.Printf("  Updated: %s\n", item.UpdatedAt)
 		fmt.Println()
 	}
 	return nil
@@ -533,9 +570,9 @@ type TokenResp struct {
 }
 
 func main() {
-	baseURL := readInput("Enter server URL (default: http://localhost:8100): ")
+	baseURL := readInput("Enter server URL (default: https://localhost:8100): ")
 	if baseURL == "" {
-		baseURL = "http://localhost:8100"
+		baseURL = "https://localhost:8100"
 	}
 
 	client := NewClient(baseURL)
@@ -552,20 +589,39 @@ func main() {
 		client.Ws.Close()
 	}()
 
+	go func() {
+		interrupt := make(chan os.Signal, 1)
+		signal.Notify(interrupt, os.Interrupt)
+		for {
+			select {
+			case <-interrupt:
+				log.Println("Interrupt signal received, closing connection...")
+				client.Ws.Close()
+				log.Println("Client stopped")
+				os.Exit(0)
+				return
+			case <-client.Ws.done:
+				log.Println("Client stopped by done signal")
+				os.Exit(0)
+				return
+			}
+		}
+	}()
+
 	for {
 		showMenu()
 		choice := readInput("Choose an option: ")
 
 		switch choice {
 		case "1":
-			email := readInput("Email: ")
+			email := readInput("Login: ")
 			password := readInput("Password: ")
 			if err := client.Register(email, password); err != nil {
 				printError(err.Error())
 			}
 
 		case "2":
-			email := readInput("Email: ")
+			email := readInput("Login: ")
 			password := readInput("Password: ")
 			if err := client.Login(email, password); err != nil {
 				printError(err.Error())
@@ -663,6 +719,15 @@ func main() {
 			if val := readStringPtr("Login: "); val != nil {
 				update.Login = val
 			}
+			if val := readStringPtr("Password: "); val != nil {
+				update.PasswordEncrypted = []byte(*val)
+			}
+			if val := readStringPtr("Binary data: "); val != nil {
+				update.BinaryData = []byte(*val)
+			}
+			if val := readStringPtr("Binary MIME type: "); val != nil {
+				update.BinaryMimeType = val
+			}
 			if val := readStringPtr("Text data: "); val != nil {
 				update.TextData = val
 			}
@@ -674,6 +739,12 @@ func main() {
 			}
 			if val := readStringPtr("Card type: "); val != nil {
 				update.CardType = val
+			}
+			if val := readStringPtr("Card number: "); val != nil {
+				update.CardNumberEncrypted = []byte(*val)
+			}
+			if val := readStringPtr("Card CVV: "); val != nil {
+				update.CardCvvEncrypted = []byte(*val)
 			}
 			if val := readInt16Ptr("Card expiry month: "); val != nil {
 				update.CardExpiryMonth = val
@@ -698,25 +769,11 @@ func main() {
 
 		case "7":
 			printInfo("Goodbye! 👋")
+			client.Ws.Close()
 			return
 
 		default:
 			printError("Invalid option. Please try again.")
 		}
 	}
-
-	// interrupt := make(chan os.Signal, 1)
-	// 	signal.Notify(interrupt, os.Interrupt)
-	// 	for {
-	// 		select {
-	// 		case <-interrupt:
-	// 			log.Println("Interrupt signal received, closing connection...")
-	// 			client.Close()
-	// 			log.Println("Client stopped")
-	// 			return
-	// 		case <-client.done:
-	// 			log.Println("Client stopped by done signal")
-	// 			return
-	// 		}
-	// 	}
 }

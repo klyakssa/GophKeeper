@@ -2,6 +2,7 @@
 -- +goose StatementBegin
 CREATE TABLE secure_data (
     id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
     data_type VARCHAR(50) NOT NULL CHECK (data_type IN ('credentials', 'text', 'binary', 'card')),
     
     login VARCHAR(255),
@@ -14,8 +15,8 @@ CREATE TABLE secure_data (
     
     card_number_encrypted BYTEA,
     card_holder VARCHAR(255),
-    card_expiry_month SMALLINT CHECK (card_expiry_month BETWEEN 1 AND 12),
-    card_expiry_year SMALLINT CHECK (card_expiry_year >= 2000),
+    card_expiry_month SMALLINT,
+    card_expiry_year SMALLINT,
     card_cvv_encrypted BYTEA,
     card_type VARCHAR(50),
     

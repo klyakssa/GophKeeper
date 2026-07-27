@@ -1,7 +1,6 @@
 package secure
 
 import (
-	"database/sql"
 	"time"
 )
 
@@ -15,43 +14,46 @@ const (
 )
 
 type SecureData struct {
-	ID                  int64          `db:"id" json:"id"`
-	DataType            DataType       `db:"data_type" json:"data_type"`
-	Login               sql.NullString `db:"login" json:"login,omitempty"`
-	PasswordEncrypted   []byte         `db:"password_encrypted" json:"password_encrypted,omitempty"`
-	TextData            sql.NullString `db:"text_data" json:"text_data,omitempty"`
-	BinaryData          []byte         `db:"binary_data" json:"binary_data,omitempty"`
-	BinaryMimeType      sql.NullString `db:"binary_mime_type" json:"binary_mime_type,omitempty"`
-	CardNumberEncrypted []byte         `db:"card_number_encrypted" json:"card_number_encrypted,omitempty"`
-	CardHolder          sql.NullString `db:"card_holder" json:"card_holder,omitempty"`
-	CardExpiryMonth     sql.NullInt16  `db:"card_expiry_month" json:"card_expiry_month,omitempty"`
-	CardExpiryYear      sql.NullInt16  `db:"card_expiry_year" json:"card_expiry_year,omitempty"`
-	CardCvvEncrypted    []byte         `db:"card_cvv_encrypted" json:"card_cvv_encrypted,omitempty"`
-	CardType            sql.NullString `db:"card_type" json:"card_type,omitempty"`
-	Metadata            sql.NullString `db:"metadata" json:"metadata"`
-	CreatedAt           time.Time      `db:"created_at" json:"created_at"`
-	UpdatedAt           time.Time      `db:"updated_at" json:"updated_at"`
-	DeletedAt           sql.NullTime   `db:"deleted_at" json:"deleted_at,omitempty"`
+	UserID              int        `db:"user_id" json:"-"`
+	ID                  int        `db:"id" json:"id"`
+	DataType            DataType   `db:"data_type" json:"data_type"`
+	Login               string     `db:"login" json:"login,omitempty"`
+	PasswordEncrypted   []byte     `db:"password_encrypted" json:"password_encrypted,omitempty"`
+	TextData            string     `db:"text_data" json:"text_data,omitempty"`
+	BinaryData          []byte     `db:"binary_data" json:"binary_data,omitempty"`
+	BinaryMimeType      string     `db:"binary_mime_type" json:"binary_mime_type,omitempty"`
+	CardNumberEncrypted []byte     `db:"card_number_encrypted" json:"card_number_encrypted,omitempty"`
+	CardHolder          string     `db:"card_holder" json:"card_holder,omitempty"`
+	CardExpiryMonth     int        `db:"card_expiry_month" json:"card_expiry_month,omitempty"`
+	CardExpiryYear      int        `db:"card_expiry_year" json:"card_expiry_year,omitempty"`
+	CardCvvEncrypted    []byte     `db:"card_cvv_encrypted" json:"card_cvv_encrypted,omitempty"`
+	CardType            string     `db:"card_type" json:"card_type,omitempty"`
+	Metadata            string     `db:"metadata" json:"metadata"`
+	CreatedAt           time.Time  `db:"created_at" json:"created_at"`
+	UpdatedAt           time.Time  `db:"updated_at" json:"updated_at"`
+	DeletedAt           *time.Time `db:"deleted_at" json:"deleted_at,omitempty"`
 }
 
 type SecureDataCreate struct {
-	DataType        DataType `json:"data_type" validate:"required,oneof=credentials text binary card"`
-	Login           string   `json:"login,omitempty"`
-	Password        []byte   `json:"password,omitempty"`
-	TextData        string   `json:"text_data,omitempty"`
-	BinaryData      []byte   `json:"binary_data,omitempty"`
-	BinaryMimeType  string   `json:"binary_mime_type,omitempty"`
-	CardNumber      []byte   `json:"card_number,omitempty"`
-	CardHolder      string   `json:"card_holder,omitempty"`
-	CardExpiryMonth int16    `json:"card_expiry_month,omitempty"`
-	CardExpiryYear  int16    `json:"card_expiry_year,omitempty"`
-	CardCvv         []byte   `json:"card_cvv,omitempty"`
-	CardType        string   `json:"card_type,omitempty"`
-	Metadata        string   `json:"metadata"`
+	UserID          int      `db:"user_id"`
+	DataType        DataType `json:"data_type" db:"data_type" validate:"required,oneof=credentials text binary card"`
+	Login           string   `json:"login,omitempty" db:"login"`
+	Password        []byte   `json:"password,omitempty" db:"password_encrypted"`
+	TextData        string   `json:"text_data,omitempty" db:"text_data"`
+	BinaryData      []byte   `json:"binary_data,omitempty" db:"binary_data"`
+	BinaryMimeType  string   `json:"binary_mime_type,omitempty" db:"binary_mime_type"`
+	CardNumber      []byte   `json:"card_number,omitempty" db:"card_number_encrypted"`
+	CardHolder      string   `json:"card_holder,omitempty" db:"card_holder"`
+	CardExpiryMonth int      `json:"card_expiry_month,omitempty" db:"card_expiry_month"`
+	CardExpiryYear  int      `json:"card_expiry_year,omitempty" db:"card_expiry_year"`
+	CardCvv         []byte   `json:"card_cvv,omitempty" db:"card_cvv_encrypted"`
+	CardType        string   `json:"card_type,omitempty" db:"card_type"`
+	Metadata        string   `json:"metadata" db:"metadata"`
 }
 
 type SecureDataUpdate struct {
-	ID                  int64     `json:"id"`
+	UserID              int       `db:"user_id"`
+	ID                  int       `json:"id"`
 	DataType            *DataType `json:"data_type,omitempty"`
 	Login               *string   `json:"login,omitempty"`
 	PasswordEncrypted   []byte    `json:"password_encrypted,omitempty"`
@@ -60,8 +62,8 @@ type SecureDataUpdate struct {
 	BinaryMimeType      *string   `json:"binary_mime_type,omitempty"`
 	CardNumberEncrypted []byte    `json:"card_number_encrypted,omitempty"`
 	CardHolder          *string   `json:"card_holder,omitempty"`
-	CardExpiryMonth     *int16    `json:"card_expiry_month,omitempty"`
-	CardExpiryYear      *int16    `json:"card_expiry_year,omitempty"`
+	CardExpiryMonth     *int      `json:"card_expiry_month,omitempty"`
+	CardExpiryYear      *int      `json:"card_expiry_year,omitempty"`
 	CardCvvEncrypted    []byte    `json:"card_cvv_encrypted,omitempty"`
 	CardType            *string   `json:"card_type,omitempty"`
 	Metadata            *string   `json:"metadata,omitempty"`

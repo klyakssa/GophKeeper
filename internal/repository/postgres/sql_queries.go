@@ -43,6 +43,7 @@ func (p *PostgresStorage) GetUserByID(ctx context.Context, userid string) (*auth
 func (p *PostgresStorage) CreateSecureData(ctx context.Context, req *secure.SecureDataCreate) error {
 	query := `
     INSERT INTO secure_data (
+		user_id,
         data_type,
         login,
         password_encrypted,
@@ -59,6 +60,7 @@ func (p *PostgresStorage) CreateSecureData(ctx context.Context, req *secure.Secu
         created_at,
         updated_at
     ) VALUES (
+		:user_id,
         :data_type,
         :login,
         :password_encrypted,
@@ -116,19 +118,19 @@ func (p *PostgresStorage) GetSecureData(ctx context.Context, userid string) ([]s
 	return secureData, nil
 }
 
-func (p *PostgresStorage) DeleteSecureData(ctx context.Context, userid string, id string) error {
+func (p *PostgresStorage) DeleteSecureData(ctx context.Context, userid string, id int) error {
 	query := `UPDATE secure_data SET deleted_at = NOW() WHERE id = :id AND user_id = :userid AND deleted_at IS NULL`
 	_, err := p.DB.NamedExecContext(ctx, query, map[string]interface{}{"id": id, "userid": userid})
 	return err
 }
 
-func (p *PostgresStorage) UpdateSecureData(ctx context.Context, req *secure.SecureDataUpdate, userid string) error {
+func (p *PostgresStorage) UpdateSecureData(ctx context.Context, req *secure.SecureDataUpdate) error {
 	query := `UPDATE secure_data SET`
 
 	var setParts []string
 	args := map[string]interface{}{
 		"id":     req.ID,
-		"userid": userid,
+		"userid": req.UserID,
 	}
 
 	if req.DataType != nil {
