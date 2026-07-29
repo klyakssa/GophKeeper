@@ -8,13 +8,22 @@ import (
 	"gophkeeper/internal/domain/auth"
 	"gophkeeper/internal/domain/secure"
 	"strings"
+
+	"github.com/jackc/pgerrcode"
+	"github.com/jackc/pgx/v5/pgconn"
 )
 
 func (p *PostgresStorage) CreateUser(ctx context.Context, login, password string) (string, error) {
 	query := `INSERT INTO users (login, password) VALUES ($1, $2) RETURNING id`
 	var userid string
-	err := p.DB.QueryRowContext(ctx, query, login, password).Scan(&userid)
-	return userid, err
+	if err := p.DB.QueryRowContext(ctx, query, login, password).Scan(&userid); err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) && pgErr.Code == pgerrcode.UniqueViolation {
+			return "", auth.ErrUserAlreadyExists
+		}
+		return "", err
+	}
+	return userid, nil
 }
 
 func (p *PostgresStorage) GetUserByLogin(ctx context.Context, login string) (*auth.User, error) {
@@ -81,15 +90,14 @@ func (p *PostgresStorage) CreateSecureData(ctx context.Context, req *secure.Secu
 
 	_, err := p.DB.NamedExecContext(ctx, query, req)
 	if err != nil {
-		p.l.Error(fmt.Sprintf("failed to create secure data: %v", err))
-		return secure.ErrSecureDataInsert
+		return err
 	}
 
 	return nil
 }
 
 func (p *PostgresStorage) GetSecureData(ctx context.Context, userid string) ([]secure.SecureData, error) {
-	query := `SELECT * FROM secure_data WHERE user_id = :userid AND deleted_at IS NULL`
+	query := `SELECT id, user_id, data_type, login, password_encrypted, text_data, binary_data, binary_mime_type, card_number_encrypted, card_holder, card_expiry_month, card_expiry_year, card_cvv_encrypted, card_type, metadata, created_at, updated_at FROM secure_data WHERE user_id = :userid AND deleted_at IS NULL`
 
 	var secureData []secure.SecureData
 

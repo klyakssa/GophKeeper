@@ -1,8 +1,8 @@
 package main
 
 import (
-	"bufio"
 	"crypto/tls"
+	"crypto/x509"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,7 +10,10 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+	"sync"
 	"time"
+
+	"golang.org/x/term"
 
 	"github.com/fasthttp/websocket"
 	"github.com/go-resty/resty/v2"
@@ -28,17 +31,14 @@ type WsClient struct {
 	done        chan struct{}
 	messageChan chan Message
 	dialer      *websocket.Dialer
+	closeOnce   sync.Once
 }
 
 // NewClient создает новый экземпляр клиента
 func NewWsClient(serverURL string) *WsClient {
-	dialer := &websocket.Dialer{
-		HandshakeTimeout: 10 * time.Second,
-		ReadBufferSize:   4096,
-		WriteBufferSize:  4096,
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: true,
-		},
+	dialer, err := createWebSocketDialerWithCert("server.crt")
+	if err != nil {
+		panic(err)
 	}
 
 	return &WsClient{
@@ -147,19 +147,46 @@ func (c *WsClient) closeHandler(code int, text string) error {
 }
 
 func (c *WsClient) Close() error {
-	defer close(c.done)
-	if c.conn != nil {
-		// Отправляем закрытие
-		err := c.conn.WriteMessage(websocket.CloseMessage,
-			websocket.FormatCloseMessage(websocket.CloseNormalClosure, "closing"))
-		if err != nil {
-			log.Printf("Close message error: %v", err)
+	var err error
+
+	c.closeOnce.Do(func() {
+		if c.done != nil {
+			close(c.done)
 		}
 
-		return c.conn.Close()
+		if c.conn != nil {
+			sendErr := c.conn.WriteMessage(websocket.CloseMessage,
+				websocket.FormatCloseMessage(websocket.CloseNormalClosure, "closing"))
+			if sendErr != nil {
+				log.Printf("Close message error: %v", sendErr)
+			}
+
+			err = c.conn.Close()
+		}
+	})
+
+	return err
+}
+
+func createWebSocketDialerWithCert(certFile string) (*websocket.Dialer, error) {
+	certPEM, err := os.ReadFile(certFile)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read cert file: %w", err)
 	}
 
-	return nil
+	certPool := x509.NewCertPool()
+	if !certPool.AppendCertsFromPEM(certPEM) {
+		return nil, fmt.Errorf("failed to parse certificate")
+	}
+
+	return &websocket.Dialer{
+		HandshakeTimeout: 10 * time.Second,
+		ReadBufferSize:   4096,
+		WriteBufferSize:  4096,
+		TLSClientConfig: &tls.Config{
+			RootCAs: certPool,
+		},
+	}, nil
 }
 
 type SecureData struct {
@@ -222,13 +249,9 @@ type Client struct {
 }
 
 func NewClient(baseURL string) *Client {
-	httpClient := &http.Client{
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: true,
-			},
-		},
-		Timeout: 30 * time.Second,
+	httpClient, err := createHTTPClientWithCert("server.crt")
+	if err != nil {
+		panic(err)
 	}
 
 	client := resty.NewWithClient(httpClient).
@@ -487,16 +510,28 @@ func (c *Client) DeleteSecureData(id int64) error {
 	return nil
 }
 
-func readInput(prompt string) string {
-	reader := bufio.NewReader(os.Stdin)
+func readInput(prompt string, secure bool) string {
 	fmt.Print(prompt)
-	input, _ := reader.ReadString('\n')
+
+	if secure {
+		password, err := term.ReadPassword(int(os.Stdin.Fd()))
+		fmt.Println()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Ошибка при чтении пароля: %v\n", err)
+			return ""
+		}
+		return strings.TrimSpace(string(password))
+	}
+
+	// Обычный ввод (с отображением)
+	var input string
+	fmt.Scanln(&input)
 	return strings.TrimSpace(input)
 }
 
-func readIntInput(prompt string) int64 {
+func readIntInput(prompt string, secure bool) int64 {
 	for {
-		input := readInput(prompt)
+		input := readInput(prompt, secure)
 		var id int64
 		_, err := fmt.Sscanf(input, "%d", &id)
 		if err == nil {
@@ -506,16 +541,16 @@ func readIntInput(prompt string) int64 {
 	}
 }
 
-func readStringPtr(prompt string) *string {
-	input := readInput(prompt)
+func readStringPtr(prompt string, secure bool) *string {
+	input := readInput(prompt, secure)
 	if input == "" {
 		return nil
 	}
 	return &input
 }
 
-func readInt16Ptr(prompt string) *int16 {
-	input := readInput(prompt)
+func readInt16Ptr(prompt string, secure bool) *int16 {
+	input := readInput(prompt, secure)
 	if input == "" {
 		return nil
 	}
@@ -570,7 +605,7 @@ type TokenResp struct {
 }
 
 func main() {
-	baseURL := readInput("Enter server URL (default: https://localhost:8100): ")
+	baseURL := readInput("Enter server URL (default: https://localhost:8100): ", false)
 	if baseURL == "" {
 		baseURL = "https://localhost:8100"
 	}
@@ -610,19 +645,19 @@ func main() {
 
 	for {
 		showMenu()
-		choice := readInput("Choose an option: ")
+		choice := readInput("Choose an option: ", false)
 
 		switch choice {
 		case "1":
-			email := readInput("Login: ")
-			password := readInput("Password: ")
+			email := readInput("Login: ", false)
+			password := readInput("Password: ", true)
 			if err := client.Register(email, password); err != nil {
 				printError(err.Error())
 			}
 
 		case "2":
-			email := readInput("Login: ")
-			password := readInput("Password: ")
+			email := readInput("Login: ", false)
+			password := readInput("Password: ", true)
 			if err := client.Login(email, password); err != nil {
 				printError(err.Error())
 			}
@@ -650,49 +685,49 @@ func main() {
 			fmt.Println("  3. Binary data")
 			fmt.Println("  4. Card data")
 
-			typeChoice := readInput("Your choice (1-4): ")
+			typeChoice := readInput("Your choice (1-4): ", false)
 
 			switch typeChoice {
 			case "1": // Credentials
 				data.DataType = "credentials"
-				data.Login = readInput("Login: ")
-				password := readInput("Password: ")
+				data.Login = readInput("Login: ", false)
+				password := readInput("Password: ", true)
 				data.Password = []byte(password)
-				data.Metadata = readInput("Metadata (optional): ")
+				data.Metadata = readInput("Metadata (optional): ", false)
 
 			case "2": // Text data
 				data.DataType = "text"
-				data.TextData = readInput("Text data: ")
-				data.Metadata = readInput("Metadata (optional): ")
+				data.TextData = readInput("Text data: ", false)
+				data.Metadata = readInput("Metadata (optional): ", false)
 
 			case "3": // Binary data
 				data.DataType = "binary"
-				filePath := readInput("Path to binary file: ")
+				filePath := readInput("Path to binary file: ", false)
 				binaryData, err := os.ReadFile(filePath)
 				if err != nil {
 					printError(fmt.Sprintf("Failed to read file: %v", err))
 					continue
 				}
 				data.BinaryData = binaryData
-				data.BinaryMimeType = readInput("MIME type (e.g., image/jpeg, application/pdf): ")
-				data.Metadata = readInput("Metadata (optional): ")
+				data.BinaryMimeType = readInput("MIME type (e.g., image/jpeg, application/pdf): ", false)
+				data.Metadata = readInput("Metadata (optional): ", false)
 
 			case "4": // Card data
 				data.DataType = "card"
-				cardNumber := readInput("Card number: ")
+				cardNumber := readInput("Card number: ", false)
 				data.CardNumber = []byte(cardNumber)
-				data.CardHolder = readInput("Card holder name: ")
+				data.CardHolder = readInput("Card holder name: ", false)
 
-				expMonth := readInput("Expiry month (MM): ")
+				expMonth := readInput("Expiry month (MM): ", false)
 				fmt.Sscanf(expMonth, "%d", &data.CardExpiryMonth)
 
-				expYear := readInput("Expiry year (YY): ")
+				expYear := readInput("Expiry year (YY): ", false)
 				fmt.Sscanf(expYear, "%d", &data.CardExpiryYear)
 
-				cvv := readInput("CVV: ")
+				cvv := readInput("CVV: ", true)
 				data.CardCvv = []byte(cvv)
-				data.CardType = readInput("Card type (Visa/Mastercard/etc): ")
-				data.Metadata = readInput("Metadata (optional): ")
+				data.CardType = readInput("Card type (Visa/Mastercard/etc): ", false)
+				data.Metadata = readInput("Metadata (optional): ", false)
 
 			default:
 				printError("Invalid choice!")
@@ -710,46 +745,46 @@ func main() {
 			}
 
 			update := &SecureDataUpdate{}
-			update.ID = readIntInput("ID to update: ")
+			update.ID = readIntInput("ID to update: ", false)
 
 			printInfo("Enter new values (press Enter to skip):")
-			if val := readStringPtr("Data type (credentials/text/binary/card): "); val != nil {
+			if val := readStringPtr("Data type (credentials/text/binary/card): ", false); val != nil {
 				update.DataType = val
 			}
-			if val := readStringPtr("Login: "); val != nil {
+			if val := readStringPtr("Login: ", false); val != nil {
 				update.Login = val
 			}
-			if val := readStringPtr("Password: "); val != nil {
+			if val := readStringPtr("Password: ", true); val != nil {
 				update.PasswordEncrypted = []byte(*val)
 			}
-			if val := readStringPtr("Binary data: "); val != nil {
+			if val := readStringPtr("Binary data: ", false); val != nil {
 				update.BinaryData = []byte(*val)
 			}
-			if val := readStringPtr("Binary MIME type: "); val != nil {
+			if val := readStringPtr("Binary MIME type: ", false); val != nil {
 				update.BinaryMimeType = val
 			}
-			if val := readStringPtr("Text data: "); val != nil {
+			if val := readStringPtr("Text data: ", false); val != nil {
 				update.TextData = val
 			}
-			if val := readStringPtr("Metadata: "); val != nil {
+			if val := readStringPtr("Metadata: ", false); val != nil {
 				update.Metadata = val
 			}
-			if val := readStringPtr("Card holder: "); val != nil {
+			if val := readStringPtr("Card holder: ", false); val != nil {
 				update.CardHolder = val
 			}
-			if val := readStringPtr("Card type: "); val != nil {
+			if val := readStringPtr("Card type: ", false); val != nil {
 				update.CardType = val
 			}
-			if val := readStringPtr("Card number: "); val != nil {
+			if val := readStringPtr("Card number: ", false); val != nil {
 				update.CardNumberEncrypted = []byte(*val)
 			}
-			if val := readStringPtr("Card CVV: "); val != nil {
+			if val := readStringPtr("Card CVV: ", true); val != nil {
 				update.CardCvvEncrypted = []byte(*val)
 			}
-			if val := readInt16Ptr("Card expiry month: "); val != nil {
+			if val := readInt16Ptr("Card expiry month: ", false); val != nil {
 				update.CardExpiryMonth = val
 			}
-			if val := readInt16Ptr("Card expiry year: "); val != nil {
+			if val := readInt16Ptr("Card expiry year: ", false); val != nil {
 				update.CardExpiryYear = val
 			}
 
@@ -762,7 +797,7 @@ func main() {
 				printError("Please login first!")
 				continue
 			}
-			id := readIntInput("ID to delete: ")
+			id := readIntInput("ID to delete: ", false)
 			if err := client.DeleteSecureData(id); err != nil {
 				printError(err.Error())
 			}
@@ -776,4 +811,27 @@ func main() {
 			printError("Invalid option. Please try again.")
 		}
 	}
+}
+
+func createHTTPClientWithCert(certFile string) (*http.Client, error) {
+	certPEM, err := os.ReadFile(certFile)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read cert file: %w", err)
+	}
+
+	certPool := x509.NewCertPool()
+	if !certPool.AppendCertsFromPEM(certPEM) {
+		return nil, fmt.Errorf("failed to parse certificate")
+	}
+
+	tlsConfig := &tls.Config{
+		RootCAs: certPool,
+	}
+
+	return &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: tlsConfig,
+		},
+		Timeout: 30 * time.Second,
+	}, nil
 }

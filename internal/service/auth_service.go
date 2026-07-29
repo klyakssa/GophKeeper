@@ -26,10 +26,6 @@ func (s *AuthService) Register(ctx context.Context, login, password string) (str
 		return "", auth.ErrLoginTooLong
 	}
 
-	if _, err := s.repo.GetUserByLogin(ctx, login); err == nil {
-		return "", auth.ErrUserAlreadyExists
-	}
-
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		if errors.Is(err, bcrypt.ErrPasswordTooLong) {

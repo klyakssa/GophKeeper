@@ -18,6 +18,8 @@ type Manager struct {
 	sync.RWMutex
 	// handlers are functions that are used to handle Events
 	handlers map[string]EventHandler
+
+	closeOnce sync.Once
 }
 
 // NewManager is used to initalize all the values inside the manager
@@ -79,15 +81,20 @@ func (m *Manager) BroadcastMessage(userID string) {
 }
 
 func (m *Manager) Close() error {
-	m.Lock()
-	defer m.Unlock()
-	for _, clients := range m.clients {
-		for client := range clients {
-			if err := client.Close(); err != nil {
-				return err
+	var err error
+
+	m.closeOnce.Do(func() {
+		m.Lock()
+		defer m.Unlock()
+		for _, clients := range m.clients {
+			for client := range clients {
+				if errC := client.Close(); err != nil {
+					m.log.Warn("error closing client", zap.Error(err))
+					err = errC
+				}
 			}
 		}
-	}
+	})
 
-	return nil
+	return err
 }

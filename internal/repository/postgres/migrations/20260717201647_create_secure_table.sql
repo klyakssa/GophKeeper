@@ -1,7 +1,7 @@
 -- +goose Up
 -- +goose StatementBegin
 CREATE TABLE secure_data (
-    id BIGSERIAL PRIMARY KEY,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id BIGINT NOT NULL,
     data_type VARCHAR(50) NOT NULL CHECK (data_type IN ('credentials', 'text', 'binary', 'card')),
     

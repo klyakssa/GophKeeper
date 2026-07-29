@@ -37,4 +37,5 @@ logs/
 
 *.key
 *.crt
+token.txt
 config.json

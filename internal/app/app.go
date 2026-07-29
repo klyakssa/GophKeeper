@@ -59,7 +59,7 @@ func Run(cfg *config.Config) {
 	router.RegisterRoutes(authHandler, wsHandler, secureHandler)
 
 	go func() {
-		if err := router.Run(ctx); err != nil && errors.Is(err, context.Canceled) {
+		if err := router.Run(ctx); err != nil && !errors.Is(err, context.Canceled) {
 			logger.Error("HTTP server stopped unexpectedly", zap.Error(err))
 			cancel()
 		}

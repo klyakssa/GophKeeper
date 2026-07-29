@@ -4,6 +4,7 @@ import (
 	"gophkeeper/internal/domain/auth"
 	"gophkeeper/internal/logger"
 	client "gophkeeper/internal/transport/websocket"
+	"gophkeeper/internal/utils"
 	"net/http"
 
 	"github.com/fasthttp/websocket"
@@ -35,7 +36,15 @@ func (w *WebSocketHandler) WebSocketHandler(c *gin.Context) {
 		return
 	}
 
-	user, err := w.service.GetUserByID(c.Request.Context(), c.GetString("user_id"))
+	user_id, err := utils.GetUserIDFromContextString(c)
+	if err != nil {
+		w.log.Error("Failed to get user id", zap.Error(err))
+		conn.WriteMessage(websocket.CloseMessage, nil)
+		conn.Close()
+		return
+	}
+
+	user, err := w.service.GetUserByID(c.Request.Context(), user_id)
 	if err != nil {
 		w.log.Error("Failed to get user", zap.Error(err))
 		conn.WriteMessage(websocket.CloseMessage, nil)

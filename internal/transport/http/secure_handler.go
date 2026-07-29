@@ -4,8 +4,8 @@ import (
 	"gophkeeper/internal/domain/secure"
 	"gophkeeper/internal/logger"
 	client "gophkeeper/internal/transport/websocket"
+	"gophkeeper/internal/utils"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -28,17 +28,23 @@ func NewSecureHandler(service secure.Service, log *logger.Logger, manager *clien
 func (s *SecureHandler) CreateSecureHandler(c *gin.Context) {
 	var req secure.SecureDataCreate
 	if err := c.ShouldBindJSON(&req); err != nil {
-		s.log.Error("Failed to create secure data", zap.Error(err))
+		s.log.Debug("Failed to create secure data", zap.Error(err))
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
 	s.log.Debug("CreateSecureHandler", zap.Any("body", req))
 
-	id, _ := strconv.Atoi(c.GetString("user_id"))
-	req.UserID = id
+	user_id, err := utils.GetUserIDFromContextInt(c)
+	if err != nil {
+		s.log.Error("Failed to create secure data", zap.Error(err))
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
 
-	err := s.service.CreateSecureData(c.Request.Context(), &req)
+	req.UserID = user_id
+
+	err = s.service.CreateSecureData(c.Request.Context(), &req)
 	if err != nil {
 		s.log.Error("Failed to create secure data", zap.Error(err))
 		c.AbortWithStatus(http.StatusInternalServerError)
@@ -56,7 +62,7 @@ func (s *SecureHandler) GetSecureHandler(c *gin.Context) {
 
 	data, err := s.service.GetSecureData(c.Request.Context(), c.GetString("user_id"))
 	if err != nil {
-		s.log.Error("Failed to get secure data", zap.Error(err))
+		s.log.Debug("Failed to get secure data", zap.Error(err))
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
@@ -76,7 +82,7 @@ type SecureDataDelete struct {
 func (s *SecureHandler) DeleteSecureHandler(c *gin.Context) {
 	var req SecureDataDelete
 	if err := c.ShouldBindJSON(&req); err != nil {
-		s.log.Error("Failed to delete secure data", zap.Error(err))
+		s.log.Debug("Failed to delete secure data", zap.Error(err))
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
@@ -96,17 +102,23 @@ func (s *SecureHandler) DeleteSecureHandler(c *gin.Context) {
 func (s *SecureHandler) UpdateSecureHandler(c *gin.Context) {
 	var req secure.SecureDataUpdate
 	if err := c.ShouldBindJSON(&req); err != nil {
-		s.log.Error("Failed to update secure data", zap.Error(err))
+		s.log.Debug("Failed to update secure data", zap.Error(err))
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
-	id, _ := strconv.Atoi(c.GetString("user_id"))
-	req.UserID = id
+	user_id, err := utils.GetUserIDFromContextInt(c)
+	if err != nil {
+		s.log.Error("Failed to create secure data", zap.Error(err))
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	req.UserID = user_id
 
 	s.log.Debug("UpdateSecureHandler", zap.Any("body", req))
 
-	err := s.service.UpdateSecureData(c.Request.Context(), &req)
+	err = s.service.UpdateSecureData(c.Request.Context(), &req)
 	if err != nil {
 		s.log.Error("Failed to update secure data", zap.Error(err))
 		c.AbortWithStatus(http.StatusInternalServerError)
