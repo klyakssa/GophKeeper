@@ -39,6 +39,10 @@ func Run(cfg *config.Config) {
 	logger.Info("Starting application...")
 
 	// jwt
+	if cfg.JWT.Secret == "" {
+		logger.Error("JWT secret key is empty")
+		return
+	}
 	jwtManager := jwt.NewJWTManager(cfg.JWT.Secret, cfg.JWT.Expire)
 
 	// сервис
