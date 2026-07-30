@@ -1,0 +1,23 @@
+{
+  "app": {
+    "name": "gopkeeper"
+  },
+  "debug": false,
+  "jwt": {
+    "expire": "1h",
+    "secret": "ADJG1HAJD5GADHS3GDKAHJD2GASJHD5KA"
+  },
+  "logging": {
+    "level": "info",
+    "max-age": 30,
+    "max-backups": 3,
+    "max-size": 500,
+    "path": "logs"
+  },
+  "postdb": {
+    "connection-string": "postgres://test:11@localhost:5432/diplom?sslmode=disable"
+  },
+  "web": {
+    "run-address": ":8100"
+  }
+}
